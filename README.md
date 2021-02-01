@@ -1,2 +1,6 @@
 # Tavola Libera
-Esto es un test
+*Integrantes*
+- Juan Manuel Zuluaga
+- Miguel Angel Hincapie
+- Carolina Monsalve
+- Jose Miguel Jaraba
