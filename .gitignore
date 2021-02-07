@@ -1,2 +1,3 @@
-venv
 controllers/__pycache__
+.azure
+__pycache__
