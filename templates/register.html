@@ -1,0 +1,44 @@
+{% extends "layout.html" %} {% block title %} Registro {% endblock %} {% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Registrarse</legend>
+            <div class="form-group mt-2">
+                {{ form.username.label(class="form-control-label") }} {% if form.username.errors %} {{ form.username(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.username(class="form-control form-control-lg") }} {% endif %} {{ form.password.label(class="form-control-label") }} {% if form.password.errors %} {{ form.password(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.password(class="form-control form-control-lg") }} {% endif %} {{ form.confirm_password.label(class="form-control-label") }} {% if form.confirm_password.errors %} {{ form.confirm_password(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.confirm_password.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.confirm_password(class="form-control form-control-lg") }} {% endif %} {{ form.security_question.label(class="form-control-label") }} {% if form.security_question.errors %} {{ form.security_question(class="form-control form-control-lg
+                is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.security_question.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.security_question(class="form-control form-control-lg") }} {% endif %} {{ form.security_answer.label(class="form-control-label") }} {% if form.security_answer.errors %} {{ form.security_answer(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.security_answer.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.security_answer(class="form-control form-control-lg") }} {% endif %}
+            </div>
+
+        </fieldset>
+        <div class="form-group mb-2">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
