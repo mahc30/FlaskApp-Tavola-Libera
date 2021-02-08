@@ -1,2 +1,4 @@
 venv
 controllers/__pycache__
+.github
+__pycache__
