@@ -16,83 +16,8 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 # extensions
 db = SQLAlchemy(app)
-
-
-class Security_Question(db.Model):
-    __tablename__ = "security_questions"
-
-    id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(124), nullable=False)
-
-    def __init__(self, question):
-        self.question = question
-
-
-class User(db.Model):
-    __tablename__ = 'users'
-
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(124), nullable=False)
-    password = db.Column(db.String(124), nullable=False)
-    security_question_id = db.Column(db.Integer,
-                                     db.ForeignKey('security_questions.id'),
-                                     nullable=False)
-    security_question = db.relationship("Security_Question",
-                                        backref=db.backref("user",
-                                                           uselist=False))
-    security_answer = db.Column(db.String(124), nullable=False)
-
-    def __init__(self, username, password, security_question, security_answer):
-        self.username = username
-        self.password = password
-        self.security_question_id = security_question
-        self.security_answer = security_answer
-
-    def __repr__(self):
-        return f"Username:  {self.username} \nPassword:  {self.password} \nSecurity_Q:  {self.security_question} \nSecurity_A: {self.security_answer}"
-        
-
-
-class Restaurants(db.Model):
-    __tablename__ = "restaurants"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(124), nullable=False)
-    address = db.Column(db.String(124), nullable=False)
-    phone_number = db.Column(db.String(124), nullable=False)
-    opening_hour = db.Column(db.DateTime, nullable=False)
-    closing_hour = db.Column(db.DateTime, nullable=False)
-    work_days = db.Column(db.String(124), nullable=False)
-    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    owner = db.relationship("User",backref=db.backref("restaurant", uselist=False))
-
-    def __init__(self, name, address, phone_number, opening_hour, closing_hour,
-                 work_days):
-        self.name = name
-        self.address = address
-        self.phone_number = phone_number
-        self.opening_hour = opening_hour
-        self.closing_hour = closing_hour
-        self.work_days = work_days
-
-class Reservation(db.Model):
-    __tablename__ = "reservations"
-
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    user = db.relationship("User", backref=db.backref("reservation", uselist=False))
-    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
-    restaurant =  db.relationship("Restaurants", backref=db.backref("reservation", uselist=False))
-
-    __table_args__ = (
-    db.PrimaryKeyConstraint(user_id, restaurant_id,),
-    )
-
-# Create DB
-# This MUST not be in production
-print("Creating Tables")
-db.create_all()
-print("TABLES CREATED")
-
+import models #Models imports db so we need to import them AFTER declaring it, interpreted languages go brrr
+#Además esto no parecen buenas practicas quizás es mejor usar funciones (?)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
