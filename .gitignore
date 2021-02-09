@@ -3,3 +3,4 @@ controllers/__pycache__
 .github
 .azure
 __pycache__
+venv
