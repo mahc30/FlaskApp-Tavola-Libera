@@ -5,8 +5,6 @@ import urllib.parse
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-from sqlalchemy import Column, String, Integer, Boolean, ForeignKey
-from sqlalchemy.orm import relationship, backref
 # Configure Database URI: 
 params = urllib.parse.quote_plus("Driver={SQL Server};Server=tcp:tavolalibera.database.windows.net,1433;Database=TavolaLiberaDB;Uid=dreamteam;Pwd=Password1;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;")
 
@@ -14,18 +12,32 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "82c021c5452b33eb5c34b1c9abc2e276"
 app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+#app.config['SQLALCHEMY_ECHO'] = True
+
 
 # extensions
 db = SQLAlchemy(app)
 
+
+
+class Security_Question(db.Model):
+    __tablename__ = "security_questions"
+
+    id = db.Column(db.Integer, primary_key = True)
+    question = db.Column(db.String(124), nullable = False)
+
+    def __init__(self, question):
+        self.question = question
+
 class User(db.Model):    
     __tablename__ = 'users'
 
-    id = Column(db.Integer, primary_key = True)
-    username = Column(db.String(124))
-    password = Column(db.String(124))
-    security_question_id = Column(db.Integer, ForeignKey('security_questions.id'))
-    security_question = relationship("Security_question", backref = backref("user", uselist= False))
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(124), nullable = False)
+    password = db.Column(db.String(124), nullable = False)
+    security_question_id = db.Column(db.Integer, db.ForeignKey('security_questions.id'), nullable = False)
+    security_question = db.relationship("Security_Question", backref = db.backref("user", uselist= False))
+    security_answer = db.Column(db.String(124), nullable = False)
 
     def __init__(self, username, password, security_question, security_answer):
         self.username = username
@@ -34,44 +46,60 @@ class User(db.Model):
         self.security_answer = security_answer
 
     def to_string(self):
-        string = "Username: " + self.username + "\nPassword: " + self.password + "\nSecurity_Q: " + self.security_question + "\nSecurity_A: " + self.security_answer
+        string = "Username:  {self.username} \nPassword:  {self.password} \nSecurity_Q:  {self.security_question} \nSecurity_A: {self.security_answer}"
         return string
 
-
-class Security_Question(db.Model):
-    __tablename__ = "security_questions"
-
-    id = Column(db.Integer, primary_key = True)
-    question = Column(db.String(124))
-
-    def __init__(self, question):
-        self.question = question
-
-
-class Restaurant(db.Model):
+class Restaurants(db.Model):
     __tablename__ = "restaurants"
 
-    id = Column(db.Integer, primary_key = True)
-    name = Column(db.String(124))
-    address = Column(db.String(124))
-    phone_number = Column(db.String(124))
-    user_id = Column(db.Integer, ForeignKey('users.id'))
-    user = relationship("User", backref=backref("restaurant", uselist= False))
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(124), nullable = False)
+    address = db.Column(db.String(124), nullable = False)
+    phone_number = db.Column(db.String(124), nullable = False)
+    opening_hour = db.Column(db.DateTime, nullable = False)
+    closing_hour = db.Column(db.DateTime, nullable = False)
+    work_days = db.Column(db.String(124), nullable = False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+    owner = db.relationship("User", backref = db.backref("restaurant", uselist= False))
 
-    def __init__(self, name, address, phone_number, user):
+    def __init__(self, name, address, phone_number, opening_hour, closing_hour, work_days):
         self.name = name
         self.address = address
         self.phone_number = phone_number
-        self.user = user
+        self.opening_hour = opening_hour
+        self.closing_hour = closing_hour
+        self.work_days = work_days
 
+# Create DB
+# This MUST not be in production
+print("Creating Tables")
 db.create_all()
+print("TABLES CREATED")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     form = LoginForm()
-    return render_template("layout.html", form=form)
 
-@app.route("/login", methods=["GET", "POST"])  # De momento login se encuentra el la raiz
+    return render_template("login.html", form=form)
+
+
+@app.route('/debug', methods=["GET"])
+def debug():
+    print("DEBUG THIS")
+    form = RegisterForm()
+
+    question = Security_Question("Nombre de su mamá")
+    db.session.add(question)
+    
+    question = Security_Question("Nombre de su Papá")
+    db.session.add(question)
+    question = Security_Question("Nombre de su Primo")
+    db.session.add(question)
+    db.session.commit()
+
+    return render_template("register.html", form=form)
+
+@app.route("/login", methods=["GET", "POST"]) 
 def login():
     form = LoginForm()
     
@@ -87,16 +115,15 @@ def login():
 @app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegisterForm()
-
     if request.method == 'GET':
         return render_template('register.html', form=form)
     else:
-
         if not form.validate():
             print("Invalid Post")
             print(form.errors)
             return redirect(url_for("register"))
         
+        print("INSERTING NEW USER")
         user = User(
             form.username.data,
         form.password.data,
@@ -104,10 +131,12 @@ def register():
         form.security_answer.data
         )
 
-        print(user.to_string())
+        db.session.add(user)
+        db.session.commit()
         flash("Usuario Creado")
         
         return redirect(url_for("login"))
+
 
 
 if __name__ == "__main__":
