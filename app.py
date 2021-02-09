@@ -78,9 +78,9 @@ class Restaurants(db.Model):
 class Reservation(db.Model):
     __tablename__ = "reservations"
 
-    user_id = db.Colum_(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship("User", backref=db.backref("reservation", uselist=False))
-    restaurant_id = db.Colum_(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     restaurant =  db.relationship("Restaurants", backref=db.backref("reservation", uselist=False))
 
     __table_args__ = (
