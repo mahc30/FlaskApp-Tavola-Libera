@@ -1,4 +1,4 @@
-from app import db
+from tavolalibera import db
 
 class Security_Question(db.Model):
     __tablename__ = "security_questions"
