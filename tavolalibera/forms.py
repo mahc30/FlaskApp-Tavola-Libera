@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField
-from wtforms.validators import DataRequired, Length, InputRequired, EqualTo
-
+from wtforms.validators import DataRequired, Length, InputRequired, EqualTo, ValidationError
+from tavolalibera.models import User
 
 class LoginForm(FlaskForm):
     username = StringField(
@@ -27,3 +27,8 @@ class RegisterForm(FlaskForm):
         "Security Answer", validators=[DataRequired(), Length(min=2, max=64)]
     )
     submit = SubmitField("Registrarse")
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError("That username is taken. Please choose a different one")

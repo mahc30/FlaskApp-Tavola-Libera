@@ -1,4 +1,10 @@
-from tavolalibera import db
+from tavolalibera import db, login_manager
+from flask_login import  UserMixin
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
 
 class Security_Question(db.Model):
     __tablename__ = "security_questions"
@@ -10,7 +16,7 @@ class Security_Question(db.Model):
         self.question = question
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -72,8 +78,8 @@ class Reservation(db.Model):
     db.PrimaryKeyConstraint(user_id, day, start_hour),
     )
 
-# Create DB
-# This MUST not be in production
-print("Creating Tables")
-db.create_all()
-print("TABLES CREATED")
+# # Create DB
+# # This MUST not be in production
+# print("Creating Tables")
+# db.create_all()
+# print("TABLES CREATED")

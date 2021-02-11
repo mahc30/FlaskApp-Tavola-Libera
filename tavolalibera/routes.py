@@ -1,13 +1,17 @@
 from flask import render_template, url_for, redirect, flash, request
+from flask_login import login_user, current_user, logout_user
 from tavolalibera.models import Restaurants,Reservation,Security_Question,User
 from tavolalibera.forms import RegisterForm, LoginForm
-from tavolalibera import app
+from tavolalibera import app, db, bcrypt
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    form = LoginForm()
-    return render_template("login.html", form=form)
+    pass
 
+
+@app.route("/home", methods=["GET"])
+def home():
+    return render_template("home.html")
 
 @app.route('/debug', methods=["GET"])
 def debug():
@@ -31,9 +35,10 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        if form.username.data == "jose" and form.password.data == "password":  # Prueba
-            flash("You Have Been Logged In", "success")
-            return redirect(url_for("login"))
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            return redirect(url_for("home"))
         else:
             flash("Login Unsuccessful. Please check username and password", "danger")
     return render_template("login.html", form=form)
@@ -44,26 +49,16 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        flash(f"Account created for {form.username.data}!", "success")
-        return redirect(url_for("index"))
-    return render_template('register.html', form=form)
-
-    """
-    if request.method == 'GET':
-        
-    else:
-        if not form.validate():
-            print("Invalid Post")
-            print(form.errors)
-            return redirect(url_for("register"))
-
-        print("INSERTING NEW USER")
-        user = User(form.username.data, form.password.data,
-                    form.security_question.data, form.security_answer.data)
-
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, password=hashed_password,security_question=form.security_question.data, security_answer=form.security_answer.data)
         db.session.add(user)
         db.session.commit()
-        flash("Usuario Creado")
-
+        flash("Your account has been created successfully ! You are now able to login", "info")
         return redirect(url_for("login"))
-    """
+    return render_template('register.html', form=form)
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("login"))
+
