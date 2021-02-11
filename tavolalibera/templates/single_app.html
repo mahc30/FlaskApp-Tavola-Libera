@@ -10,10 +10,138 @@
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <title>Hello, world!</title>
+
+    <style type="text/css">
+        section {
+            width: 340px;
+            height: 450px;
+            border-style: solid;
+            background: #fafafa;
+            color: #333333;
+            margin-top: 1rem;
+            margin-left: 1rem;
+
+        }
+
+        h2 {
+            text-align: center;
+
+        }
+
+        input[type=text],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        img {
+            padding: 5px;
+            width: 150px;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .boton {
+            background-color: black;
+            color: white;
+            padding: 4px;
+            text-decoration: none;
+        }
+
+        .volver {
+            margin-left: 0px;
+            line-height: 28px;
+        }
+    </style>
+
 </head>
 
 <body>
-    <h1>Hello, world!</h1>
+    <section id="splash">
+        <br>
+        <h2>Splash</h2>
+    </section>
+    <section id="reset">
+        <a href="#" class="boton volver">&lt;--</a>
+        <br>
+        <h2>Reset Password</h2>
+        <br>
+        <div class="mb-3">
+            <label for="username" class="form-control-label">Usuario</label>
+            <input type="text" class="form-control form-control-lg" id="username" placeholder="username">
+        </div>
+        <div class="mb-3">
+            <label for="security_question" class="form-control-label">Pregunta de seguridad</label>
+            <input type="text" class="form-control form-control-lg" id="security_question"
+                placeholder="security question">
+        </div>
+        <div class="mb-3">
+            <input class="btn btn-info" type="submit" value="Continuar">
+        </div>
+    </section>
+    <section id="reset_part2">
+        <a href="#" class="boton volver">&lt;--</a>
+        <br>
+        <h2>Reset Password</h2>
+        <br>
+        <div class="mb-3">
+            <label for="password" class="form-control-label">Contraseña</label>
+            <input type="text" class="form-control form-control-lg" id="password" placeholder="password">
+        </div>
+        <div class="mb-3">
+            <label for="confirm_password" class="form-control-label">Confirmar Contraseña</label>
+            <input type="text" class="form-control form-control-lg" id="confirm_password"
+                placeholder="confirm password">
+        </div>
+        <div class="mb-3">
+            <input class="btn btn-info" type="submit" value="Confirmar">
+        </div>
+    </section>
+    <section>
+        <a href="#" class="boton volver">&lt;--</a>
+        <br>
+        <h2>Restaurante</h2>
+        <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
+            class="rounded mx-auto d-block" alt="">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </p>
+        <div class="border-top pt-3">
+            <h4>Menu</h4>
+        </div>
+        <div class="border-top pt-3">
+            <h4>Reservas</h4>
+        </div>
+    </section>
+    <section>
+        <a href="#" class="boton volver">&lt;--</a>
+        <br>
+        <h2>Menu</h2>
+        <div class="border-top pt-3">
+            <h4>Plato 1</h4>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+        </div>
+        <div class="border-top pt-3">
+            <h4>Plato 2</h4>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+        </div>
+        <div class="border-top pt-3 ml-2">
+            <h4>Plato 3</h4>
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            </p>
+        </div>
+    </section>
 
 
 
