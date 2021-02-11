@@ -4,32 +4,22 @@ from tavolalibera.models import Restaurants,Reservation,Security_Question,User
 from tavolalibera.forms import RegisterForm, LoginForm
 from tavolalibera import app, db, bcrypt
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    pass
 
 
 @app.route("/home", methods=["GET"])
 def home():
-    return render_template("home.html")
+    return render_template("home.html") #Cambiar por Splash
 
-@app.route('/debug', methods=["GET"])
-def debug():
-    print("DEBUG THIS")
-    form = RegisterForm()
+#@app.route('/debug', methods=["GET"])
+#def debug():
+ 
+# Cambiar por Splash
+# @app.route("/", methods=["GET", "POST"])
+# def index():
+#    form = LoginForm()
+#    return render_template("login.html", form = form)  
 
-    question = Security_Question("Nombre de su mamá")
-    db.session.add(question)
-
-    question = Security_Question("Nombre de su Papá")
-    db.session.add(question)
-    question = Security_Question("Nombre de su Primo")
-    db.session.add(question)
-    db.session.commit()
-
-    return render_template("register.html", form=form)
-
-
+@app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
