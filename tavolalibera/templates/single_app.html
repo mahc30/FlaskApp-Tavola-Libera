@@ -6,28 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
     <title>Hello, world!</title>
-
+    <!-- -->
     <style type="text/css">
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
         section {
-            width: 340px;
-            height: 450px;
+            width: 98%;
+            /* (One of the) Most Common Mobile Resolution */
+            height: 640px;
             border-style: solid;
             background: #fafafa;
             color: #333333;
             margin-top: 1rem;
-            margin-left: 1rem;
-
+            margin-left: 1%;
+            margin-right: 1%;
+            overflow-x: hidden;
         }
-
-        h2 {
-            text-align: center;
-
-        }
-
+        
         input[type=text],
         select {
             width: 100%;
@@ -38,26 +41,25 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
-
+        
         img {
             padding: 5px;
             width: 150px;
         }
-
+        
         input[type=submit]:hover {
             background-color: #45a049;
         }
-
-        .boton {
-            background-color: black;
-            color: white;
-            padding: 4px;
-            text-decoration: none;
-        }
-
+        
         .volver {
             margin-left: 0px;
             line-height: 28px;
+        }
+        
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
         }
     </style>
 
@@ -65,95 +67,444 @@
 
 <body>
     <section id="splash">
-        <br>
-        <h2>Splash</h2>
+        <h2 class="text-center">Splash</h2>
     </section>
     <section id="reset">
-        <a href="#" class="boton volver">&lt;--</a>
-        <br>
-        <h2>Reset Password</h2>
-        <br>
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Reset Password</h2>
         <div class="mb-3">
             <label for="username" class="form-control-label">Usuario</label>
             <input type="text" class="form-control form-control-lg" id="username" placeholder="username">
         </div>
-        <div class="mb-3">
-            <label for="security_question" class="form-control-label">Pregunta de seguridad</label>
-            <input type="text" class="form-control form-control-lg" id="security_question"
-                placeholder="security question">
+        <div class="form-group">
+            <label for=""></label>
+            <select class="custom-select" name="" id="">
+                <option selected>Pregunta de Seguridad</option>
+                <option value="1">Pregunta 1</option>
+                <option value="2">Pregunta 2</option>
+                <option value="3">Pregunta 3</option>
+            </select>
         </div>
-        <div class="mb-3">
-            <input class="btn btn-info" type="submit" value="Continuar">
+        <div class="mb-3 mx-auto">
+            <input class="btn btn-info w-100" type="submit" value="Continuar">
         </div>
     </section>
     <section id="reset_part2">
-        <a href="#" class="boton volver">&lt;--</a>
-        <br>
-        <h2>Reset Password</h2>
-        <br>
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Reset Password</h2>
         <div class="mb-3">
             <label for="password" class="form-control-label">Contraseña</label>
             <input type="text" class="form-control form-control-lg" id="password" placeholder="password">
         </div>
         <div class="mb-3">
             <label for="confirm_password" class="form-control-label">Confirmar Contraseña</label>
-            <input type="text" class="form-control form-control-lg" id="confirm_password"
-                placeholder="confirm password">
+            <input type="text" class="form-control form-control-lg" id="confirm_password" placeholder="confirm password">
         </div>
-        <div class="mb-3">
-            <input class="btn btn-info" type="submit" value="Confirmar">
+        <div class="mb-3 mx-auto">
+            <input class="btn btn-info w-100" type="submit" value="Confirmar">
+        </div>
+    </section>
+
+    <section class="overflow-auto">
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+        <h2 class="px-4 my-4">Lista Restaurantes</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Restaurante*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Restaurante*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Restaurante*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                </div>
+            </div>
         </div>
     </section>
     <section>
-        <a href="#" class="boton volver">&lt;--</a>
-        <br>
-        <h2>Restaurante</h2>
-        <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80"
-            class="rounded mx-auto d-block" alt="">
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Restaurante</h2>
+        <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+        <p class="px-2">Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </p>
         <div class="border-top pt-3">
-            <h4>Menu</h4>
+            <h4 class="px-2"><strong>Ver Menú</strong></h4>
         </div>
         <div class="border-top pt-3">
-            <h4>Reservas</h4>
+            <h4 class="px-2"><strong>Reservar</strong></h4>
         </div>
     </section>
+    <section class="overflow-auto">
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Lista Restaurantes</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Plato*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Plato*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Plato*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Version Admin de restaurante -->
+    <section class="overflow-auto">
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Lista Restaurantes</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Plato*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="Dish Image">
+                    <a href="#" class="boton volver button button-primary text-right">icono_edit</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Plato*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                    <a href="#" class="boton volver button button-primary text-right">icono_edit</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <h4 class="px-2">*Nombre del Plato*</h4>
+                    <p class="px-2 my-auto">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                </div>
+                <div class="col">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                    <a href="#" class="boton volver button button-primary text-right">icono_edit</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Editing Version -->
+    <section class="overflow-auto">
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Lista Restaurantes</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" value="Nombre del plato">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="" id="" rows="3" value="Lorem ipsum dolor sit amet consectetur adipisicing elit."></textarea>
+                    </div>
+                </div>
+                <div class="col h-100">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                    <a href="#" class="boton volver button button-primary text-right">icono_confirmar</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col border-top pt-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="" id="" aria-describedby="helpId" value="Nombre del plato">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="" id="" rows="3" value="Lorem ipsum dolor sit amet consectetur adipisicing elit."></textarea>
+                    </div>
+                </div>
+                <div class="col h-100">
+                    <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
+                    <a href="#" class="boton volver button button-primary text-right">icono_confirmar</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="reset_part2">
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Reserva en *Nombre_Restaurante*</h2>
+        <div class="container">
+            <div class="form-group row my-4">
+                <label for="example-date-input" class="">Fecha</label>
+                <div class="col-10">
+                    <input class="form-control" type="date" value="2011-08-19" id="example-date-input">
+                </div>
+            </div>
+            <div class="form-group row my-4">
+                <label for="example-time-input" class="">Hora</label>
+                <div class="col-10">
+                    <input class="form-control" type="time" value="13:45:00" id="example-time-input">
+                </div>
+            </div>
+            <div class="form-group row my-4">
+                <label for="example-number-input" class="">Numero de Personas</label>
+                <div class="col-10">
+                    <input class="form-control" type="number" value="42" id="example-number-input">
+                </div>
+            </div>
+
+            <div class="form-group row my-4 w-75 mx-1">
+                <input name="" id="" class="btn btn-dark w-100 my-4" type="button" value="Quiero Agregar Platos">
+            </div>
+            <div class="form-group row my-4 w-100 mx-auto">
+                <input name="" id="" class="btn btn-dark w-100 my-2" type="button" value="Confirmar">
+            </div>
+
+        </div>
+    </section>
+    <section id="reset_part2">
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Confirmar Reserva en *Nombre_Restaurante*</h2>
+
+        <div class="container">
+            <div class="row my-2">
+                <div class="col">
+                    <strong>Fecha</strong>
+                </div>
+                <div class="col">
+                    <span class="text-left"> xx/xx/xxxx</span>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col">
+                    <strong>Hora</strong>
+                </div>
+                <div class="col">
+                    <span class="text-left"> xx:xx AM</span>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col">
+                    <strong>Número de Personas</strong>
+                </div>
+                <div class="col">
+                    <span class="text-left"> xx</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="container border mh-50 overflow-auto">
+            <div class="row my-2">
+                <div class="col text-center">
+                    <strong class="">x</strong>
+                </div>
+                <div class="col">
+                    <span>**Nombre del Plato**</span>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col text-center">
+                    <strong class="">x</strong>
+                </div>
+                <div class="col">
+                    <span>**Nombre del Plato**</span>
+                </div>
+            </div>
+            <div class="row my-2">
+                <div class="col text-center">
+                    <strong class="">x</strong>
+                </div>
+                <div class="col">
+                    <span>**Nombre del Plato**</span>
+                </div>
+            </div>
+        </div>
+        <input name="" id="" class="btn btn-dark w-100 my-4" type="button" value="Confirmar">
+    </section>
+
     <section>
-        <a href="#" class="boton volver">&lt;--</a>
-        <br>
-        <h2>Menu</h2>
-        <div class="border-top pt-3">
-            <h4>Plato 1</h4>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-        </div>
-        <div class="border-top pt-3">
-            <h4>Plato 2</h4>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
-        </div>
-        <div class="border-top pt-3 ml-2">
-            <h4>Plato 3</h4>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
+
+        <h2 class="px-4 my-4">Registrar nuevo Restaurante</h2>
+
+        <div class="container">
+            <div class="row form-group">
+                <label for="">Nombre del Restaurante</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+            </div>
+            <div class="row form-group">
+                <label for="">Dirección</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+            </div>
+            <div class="row form-group">
+                <label for="">Teléfono</label>
+                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+            </div>
+            <div class="row form-group">
+                <label for="">Ciudad</label>
+                <select class="custom-select" name="" id="">
+                        <option selected>Seleccionar</option>
+                        <option value="1">Medellín</option>
+                        <option value="2">Moscú</option>
+                        <option value="3">Bogotá</option>
+                    </select>
+            </div>
+
+            <input name="" id="" class="btn btn-dark w-100 my-4" type="button" value="Continuar">
         </div>
     </section>
 
+    <section>
+        <a name="" id="" class="btn btn-dark" href="#" role="button">&lt;--</a>
 
+        <h2 class="px-4 my-4">Registrar nuevo Restaurante</h2>
 
+        <div class="container">
+            <div class="row form-group form-inline">
+                <div class="col">D</div>
+                <div class="col">L</div>
+                <div class="col">M</div>
+                <div class="col">M</div>
+                <div class="col">J</div>
+                <div class="col">V</div>
+                <div class="col">S</div>
+            </div>
+            <div class="row form-group form-inline mb-4">
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                    <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
+                  </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                    <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
+                  </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                    <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
+                  </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                    <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
+                  </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                    <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
+                  </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                    <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
+                  </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                    <input class="form-check-input" name="" id="" type="checkbox" value="checkedValue" aria-label="Text for screen reader">
+                  </label>
+                </div>
+            </div>
 
+            <strong class="my-4">Horario de Atención</strong>
+            <div class="form-group row mt-2 ps-2">
+                <label for="example-time-input" class="col-2 col-form-label">Desde</label>
+                <div class="col-10">
+                    <input class="form-control w-75" type="time" value="13:45:00" id="example-time-input">
+                </div>
+            </div>
+            <div class="form-group row my-4 ps-2">
+                <label for="example-time-input" class="col-2 col-form-label">Hasta</label>
+                <div class="col-10">
+                    <input class="form-control w-75" type="time" value="13:45:00" id="example-time-input">
+                </div>
+            </div>
 
-
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"
-        integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js"
-        integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG"
-        crossorigin="anonymous"></script>
+            <div class="row form-group">
+                <label for="">Aforo Máximo</label>
+                <input type="text" class="ms-3 w-25 form-control" name="" id="" aria-describedby="helpId" placeholder="">
+            </div>
+            <input name="" id="" class="btn btn-dark w-100 my-4" type="button" value="Confirmar">
+        </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
 
 </body>
 
