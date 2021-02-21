@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField
-from wtforms.validators import DataRequired, Length, InputRequired, EqualTo, ValidationError
+from wtforms.validators import DataRequired, Length, InputRequired, EqualTo, ValidationError, Regexp
 from tavolalibera.models import User
 
 class LoginForm(FlaskForm):
     username = StringField(
-        "Username", validators=[DataRequired(), Length(min=2, max=20)]
+        "Username", validators=[DataRequired(), Length(min=2, max=20), Regexp("^\w+$")]
     )
     password = PasswordField("Password", validators=[DataRequired()])
     remember = BooleanField("Remember Me")
@@ -14,7 +14,7 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
     username = StringField(
-        "Username", validators=[DataRequired(), Length(min=2, max=20)]
+        "Username", validators=[DataRequired(), Length(min=2, max=20), Regexp("^\w+$")]
     )
     password = PasswordField("Password", validators=[DataRequired()])
     confirm_password = PasswordField(
@@ -24,7 +24,7 @@ class RegisterForm(FlaskForm):
         "Security Question", validators=[DataRequired()], choices=[(1, 'Pregunta 1'), (2, 'Pregunta 2'), (3, 'Pregunta 3')]
     )
     security_answer = StringField(
-        "Security Answer", validators=[DataRequired(), Length(min=2, max=64)]
+        "Security Answer", validators=[DataRequired(), Length(min=2, max=64), Regexp("^\w+$")]
     )
     submit = SubmitField("Registrarse")
 
