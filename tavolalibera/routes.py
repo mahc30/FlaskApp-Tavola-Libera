@@ -1,4 +1,4 @@
-from flask import render_template, url_for, redirect, flash, request
+from flask import render_template, url_for, redirect, flash, request, abort
 from flask_login import login_user, current_user, logout_user
 from tavolalibera.models import Restaurants,Reservation,Security_Question,User
 from tavolalibera.forms import RegisterForm, LoginForm
@@ -29,8 +29,7 @@ def login():
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             return redirect(url_for("home"))
-        else:
-            flash("Login Unsuccessful. Please check username and password", "danger")
+    flash("Usuario o Contraseña Incorrectos", "danger")
     return render_template("login.html", form=form)
 
 
@@ -45,10 +44,11 @@ def register():
         db.session.commit()
         flash("Your account has been created successfully ! You are now able to login", "info")
         return redirect(url_for("login"))
+    else:
+        flash("Ocurrió un error. Por favor verifique los datos ingresados")
     return render_template('register.html', form=form)
 
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("login"))
-

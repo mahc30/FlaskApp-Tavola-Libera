@@ -63,10 +63,10 @@ class BasicTests(unittest.TestCase):
         response = self.register('UNIT_TEST_USER', 'UNIT_TEST_PASSWORD', 'UNIT_TEST_PASSWORD', 1, 'UNIT_TEST_ANSWER')
         self.assertEqual(response.status_code, 200)
         response = self.register('UNIT_TEST_USER', 'UNIT_TEST_PASSWORD', 'UNIT_TEST_PASSWORD', 1, 'UNIT_TEST_ANSWER')
-        self.assert_flash_message(response, 'Ocurrió un error. El usuario ya existe') 
+        self.assert_flash_message(response, 'Ocurrió un error. Por favor verifique los datos ingresados')
  
     def test_invalid_user_registration_forbidden_characters(self):
-        response = self.register('B̴̡̢̯̟̬̪̜͔̰̌A̷͓͇̫͈̥͑̓͐͗͌́̑̚͜͠͝͝D̸̢͙̻̞̉̓̾̓̌̎̄͛̽́͜͜ ̶̨̳͈̝͓̲̬̼̣̗͖̫͉̓̌͛́͜ͅŰ̶̢̞͖̙͔̘̟͉̗͖͂̓̐̇̀̎͜͝Ş̵͔̘͇̒̕E̸͚͍͑̀̆̈́͋̑̄̀̃́͘͝͝Ř̸̝̭̝̼͎̬̟̉̄̉̅͛̓̄́͘  ', 'UNIT_TEST_PASSWORD', 'ContraseñaDistintajeje', 1, 'UNIT_TEST_ANSWER')
+        response = self.register('B̴̡̢̯̟̬̪̜͔̰̌A̷͓͇̫͈̥͑̓͐͗͌́̑̚͜͠͝͝D̸̢͙̻̞̉̓̾̓̌̎̄͛̽́͜͜ ̶̨̳͈̝͓̲̬̼̣̗͖̫͉̓̌͛́͜ͅŰ̶̢̞͖̙͔̘̟͉̗͖͂̓̐̇̀̎͜͝Ş̵͔̘͇̒̕E̸͚͍͑̀̆̈́͋̑̄̀̃́͘͝͝Ř̸̝̭̝̼͎̬̟̉̄̉̅͛̓̄́͘  ///', 'UNIT_TEST_PASSWORD', 'UNIT_TEST_PASSWORD', 1, 'UNIT_TEST_ANSWER')
         self.assert_flash_message(response, 'Ocurrió un error. Por favor verifique los datos ingresados')
         response = self.register('UNIT_TEST_USER', '{´*-_.ñ{¿?#4;.}', '{´*-_.ñ{¿?#4;.}', 1, 'UNIT_TEST_ANSWER')
         self.assert_flash_message(response, 'Ocurrió un error. Por favor verifique los datos ingresados') 
@@ -86,14 +86,10 @@ class BasicTests(unittest.TestCase):
         self.assert_flash_message(response, 'Usuario o Contraseña Incorrectos')
       
     def test_invalid_user_login_no_password(self):
-        response = self.register('UNIT_TEST_USER_FAIL', 'UNIT_TEST_PASSWORD', 'UNIT_TEST_PASSWORD', 1, 'UNIT_TEST_ANSWER')
-        self.assertEqual(response.status_code, 200)
         response = self.login('UNIT_TEST_USER_FAIL', '')
         self.assert_flash_message(response, 'Usuario o Contraseña Incorrectos')
         
     def test_invalid_user_login_no_username(self):
-        response = self.register('UNIT_TEST_USER_FAIL', 'UNIT_TEST_PASSWORD', 'UNIT_TEST_PASSWORD', 1, 'UNIT_TEST_ANSWER')
-        self.assertEqual(response.status_code, 200)
         response = self.login('', 'UNIT_TEST_PASSWORD')
         self.assert_flash_message(response, 'Usuario o Contraseña Incorrectos')
     
@@ -102,9 +98,7 @@ class BasicTests(unittest.TestCase):
         self.assert_flash_message(response, 'Usuario o Contraseña Incorrectos')
     
     def test_invalid_user_login_forbidden_characters(self):
-        response = self.register('B̴̡̢̯̟̬̪̜͔̰̌A̷͓͇̫͈̥͑̓͐͗͌́̑̚͜͠͝͝D̸̢͙̻̞̉̓̾̓̌̎̄͛̽́͜͜ ̶̨̳͈̝͓̲̬̼̣̗͖̫͉̓̌͛́͜ͅŰ̶̢̞͖̙͔̘̟͉̗͖͂̓̐̇̀̎͜͝Ş̵͔̘͇̒̕E̸͚͍͑̀̆̈́͋̑̄̀̃́͘͝͝Ř̸̝̭̝̼͎̬̟̉̄̉̅͛̓̄́͘  ', 'UNIT_TEST_PASSWORD', 'ContraseñaDistintajeje', 1, 'UNIT_TEST_ANSWER')
-        self.assert_flash_message(response, 'Ocurrió un error. Por favor verifique los datos ingresados')
-        response = self.login('B̴̡̢̯̟̬̪̜͔̰̌A̷͓͇̫͈̥͑̓͐͗͌́̑̚͜͠͝͝D̸̢͙̻̞̉̓̾̓̌̎̄͛̽́͜͜ ̶̨̳͈̝͓̲̬̼̣̗͖̫͉̓̌͛́͜ͅŰ̶̢̞͖̙͔̘̟͉̗͖͂̓̐̇̀̎͜͝Ş̵͔̘͇̒̕E̸͚͍͑̀̆̈́͋̑̄̀̃́͘͝͝Ř̸̝̭̝̼͎̬̟̉̄̉̅͛̓̄́͘  ', 'UNIT_TEST_PASSWORD')
+        response = self.login('B̴̡̢̯̟̬̪̜͔̰̌A̷͓͇̫͈̥͑̓͐͗͌́̑̚͜͠͝͝D̸̢͙̻̞̉̓̾̓̌̎̄͛̽́͜͜ ̶̨̳͈̝͓̲̬̼̣̗͖̫͉̓̌͛́͜ͅŰ̶̢̞͖̙͔̘̟͉̗͖͂̓̐̇̀̎͜͝Ş̵͔̘͇̒̕E̸͚͍͑̀̆̈́͋̑̄̀̃́͘͝͝Ř̸̝̭̝̼͎̬̟̉̄̉̅͛̓̄́͘  ///', 'UNIT_TEST_PASSWORD')
         self.assert_flash_message(response, 'Usuario o Contraseña Incorrectos')
         
     def test_valid_user_reset_password(self):
