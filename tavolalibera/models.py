@@ -41,7 +41,7 @@ class User(db.Model, UserMixin):
         
 
 
-class Restaurants(db.Model):
+class Restaurant(db.Model):
     __tablename__ = "restaurants"
 
     id = db.Column(db.Integer, primary_key=True)
@@ -53,6 +53,7 @@ class Restaurants(db.Model):
     work_days = db.Column(db.String(124), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     owner = db.relationship("User",backref=db.backref("restaurant", uselist=False))
+    # image_url = db.Column(db.String(1024), nullable = True) #TODO migration
 
     def __init__(self, name, address, phone_number, opening_hour, closing_hour,
                  work_days):
@@ -72,14 +73,29 @@ class Reservation(db.Model):
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     start_hour = db.Column(db.DateTime, nullable = False, primary_key = True) #PK
     finish_hour = db.Column(db.DateTime, nullable = False)
-    restaurant =  db.relationship("Restaurants", backref=db.backref("reservation", uselist=False))
+    restaurant =  db.relationship("Restaurant", backref=db.backref("reservation", uselist=False))
 
     __table_args__ = (
     db.PrimaryKeyConstraint(user_id, day, start_hour),
     )
+    
+class Dish(db.Model):
+    __tablename__ = "dishes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(124), nullable=False)
+    description = db.Column(db.String(1024), nullable=True)
+    # image_url = db.Column(db.String(1024), nullable=True) #TODO migration
+    restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
+    restaurant = db.relationship("Restaurant", backref=db.backref("dish", uselist=False))
+    
+    def __init__(self, name, description, restaurant_id):
+        self.name = name
+        self.description = description
+        self.restaurant_id = restaurant_id
 
 # # Create DB
 # # This MUST not be in production
-# print("Creating Tables")
-# db.create_all()
-# print("TABLES CREATED")
+print("Creating Tables")
+db.create_all()
+print("TABLES CREATED")
