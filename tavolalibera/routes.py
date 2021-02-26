@@ -1,10 +1,8 @@
 from flask import render_template, url_for, redirect, flash, request, abort
-from flask_login import login_user, current_user, logout_user
-from tavolalibera.models import Restaurants,Reservation,Security_Question,User
+from flask_login import login_user, current_user, logout_user, login_required
+from tavolalibera.models import Restaurant ,Reservation ,Security_Question, User, Dish
 from tavolalibera.forms import RegisterForm, LoginForm
 from tavolalibera import app, db, bcrypt
-
-
 
 @app.route("/home", methods=["GET"])
 def home():
@@ -32,7 +30,6 @@ def login():
     flash("Usuario o Contraseña Incorrectos", "danger")
     return render_template("login.html", form=form)
 
-
 @app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegisterForm()
@@ -52,3 +49,18 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
+@app.route('/restaurants', methods=["GET"])
+@login_required
+def restaurants():
+   
+   restaurants = Restaurant.query.all()
+   
+   return render_template('restaurants.html', restaurants = restaurants)
+
+@app.route('/dishes/<restaurant_id>', methods=["GET"])
+@login_required
+def dishes(restaurant_id):
+    dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
+    
+    return render_template('dishes.html', dishes = dishes)
