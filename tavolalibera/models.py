@@ -48,21 +48,24 @@ class Restaurant(db.Model):
     name = db.Column(db.String(124), nullable=False)
     address = db.Column(db.String(124), nullable=False)
     phone_number = db.Column(db.String(124), nullable=False)
-    opening_hour = db.Column(db.DateTime, nullable=False)
-    closing_hour = db.Column(db.DateTime, nullable=False)
+    #city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable = False) #TODO migration
+    #city = db.relationship("City", backref = db.backref("restaurant", uselist= False)) #TODO migration
+    opening_hour = db.Column(db.Time, nullable=False)
+    closing_hour = db.Column(db.Time, nullable=False)
     work_days = db.Column(db.String(124), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     owner = db.relationship("User",backref=db.backref("restaurant", uselist=False))
-    # image_url = db.Column(db.String(1024), nullable = True) #TODO migration
+    #max_seats = db.Column(db.Integer, nullable = False) #TODO migration
 
-    def __init__(self, name, address, phone_number, opening_hour, closing_hour,
-                 work_days):
+
+    def __init__(self, name, address, phone_number, opening_hour, closing_hour, work_days, owner_id):
         self.name = name
         self.address = address
         self.phone_number = phone_number
         self.opening_hour = opening_hour
         self.closing_hour = closing_hour
         self.work_days = work_days
+        self.owner_id = owner_id
 
 class Reservation(db.Model):
     __tablename__ = "reservations"
