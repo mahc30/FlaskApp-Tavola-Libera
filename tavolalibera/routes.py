@@ -5,8 +5,6 @@ from tavolalibera.forms import RegisterForm, LoginForm, CreateRestaurantForm
 from tavolalibera import app, db, bcrypt
 from datetime import datetime
 
-
-
 @app.route("/home", methods=["GET"])
 def home():
     return render_template("home.html") #Cambiar por Splash
@@ -32,7 +30,6 @@ def login():
             return redirect(url_for("home"))
     flash("Usuario o Contraseña Incorrectos", "danger")
     return render_template("login.html", form=form)
-
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
@@ -83,3 +80,18 @@ def register_restaurant():
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
+@app.route('/restaurants', methods=["GET"])
+@login_required
+def restaurants():
+   
+   restaurants = Restaurant.query.all()
+   
+   return render_template('restaurants.html', restaurants = restaurants)
+
+@app.route('/dishes/<restaurant_id>', methods=["GET"])
+@login_required
+def dishes(restaurant_id):
+    dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
+    
+    return render_template('dishes.html', dishes = dishes)

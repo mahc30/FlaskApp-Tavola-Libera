@@ -1,7 +1,8 @@
 venv
-controllers/__pycache__
+__pycache__
 .github
 .azure
-__pycache__
 venv
 .vscode/*.json
+tavolalibera/test.db
+tavolalibera/__pycache__
