@@ -1,0 +1,23 @@
+{
+  "name": "TavolaLibera",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoseJaraba/FlaskApp-Tavola-Libera.git"
+  },
+  "keywords": [],
+  "author": "Jose <jose.jaraba@upb.edu.co>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoseJaraba/FlaskApp-Tavola-Libera/issues"
+  },
+  "homepage": "https://github.com/JoseJaraba/FlaskApp-Tavola-Libera#readme",
+  "devDependencies": {
+    "sass": "^1.32.8"
+  }
+}
