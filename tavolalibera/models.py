@@ -106,6 +106,6 @@ class City(db.Model):
     
 # # Create DB
 # # This MUST not be in production
-print("Creating Tables")
-db.create_all()
-print("TABLES CREATED")
+# print("Creating Tables")
+# db.create_all()
+# print("TABLES CREATED")
