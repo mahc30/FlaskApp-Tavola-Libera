@@ -1,3 +1,2 @@
 **Integrantes**
-- José Miguel Jaraba Serpa
-- Miguel Ángel Hincapié Calle
+Frontend of Tavola Libera
