@@ -1,6 +1,3 @@
-# Tavola Libera
-*Integrantes*
-- Juan Manuel Zuluaga
-- Miguel Angel Hincapie
-- Carolina Monsalve
-- Jose Miguel Jaraba
+**Integrantes**
+- José Miguel Jaraba Serpa
+- Miguel Ángel Hincapié Calle
