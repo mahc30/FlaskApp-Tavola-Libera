@@ -1,2 +1,6 @@
-**Integrantes**
-Frontend of Tavola Libera
+# Tavola Libera
+*Integrantes*
+- Juan Manuel Zuluaga
+- Miguel Angel Hincapie
+- Carolina Monsalve
+- Jose Miguel Jaraba
