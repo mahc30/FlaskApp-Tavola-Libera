@@ -1,6 +1,6 @@
 from flask import render_template, url_for, redirect, flash, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
-from tavolalibera.models import Restaurant,Reservation,Security_Question,User
+from tavolalibera.models import Restaurant,Reservation,Security_Question,User, Dish
 from tavolalibera.forms import RegisterForm, LoginForm, CreateRestaurantForm
 from tavolalibera import app, db, bcrypt
 from datetime import datetime
@@ -47,7 +47,7 @@ def register():
     return render_template('register.html', form=form)
 
 @app.route('/register/restaurant', methods=['GET', 'POST'])
-#@login_required
+@login_required
 def register_restaurant():
     form = CreateRestaurantForm()
     
@@ -59,10 +59,12 @@ def register_restaurant():
             name = form.name.data,
             address = form.address.data,
             phone_number = form.phone_number.data,
+            city_id = form.city.data,
             opening_hour = form.opening_hour.data,
             closing_hour = form.closing_hour.data,
             work_days = 'DLMMJVS', #TODO temporal fix, ¿Cómo vamos a guardar los días en que el restaurante está abierto?
-            owner_id = current_user.id
+            owner_id = current_user.id,
+            max_seats = form.max_seats.data
         )
             
         db.session.add(restaurant)
@@ -73,9 +75,6 @@ def register_restaurant():
         flash(form.errors, "danger")
         return render_template('register_restaurant.html', form = form)
         
-        
-            
-    
 @app.route("/logout")
 def logout():
     logout_user()

@@ -58,16 +58,16 @@ class Restaurant(db.Model):
     max_seats = db.Column(db.Integer, nullable = False)
     image_url = db.Column(db.String(1024), nullable=True, default="https://via.placeholder.com/300")
     
-
-
-    def __init__(self, name, address, phone_number, opening_hour, closing_hour, work_days, owner_id):
+    def __init__(self, name, address, phone_number, city_id, opening_hour, closing_hour, work_days, owner_id, max_seats):
         self.name = name
         self.address = address
         self.phone_number = phone_number
+        self.city_id = city_id
         self.opening_hour = opening_hour
         self.closing_hour = closing_hour
         self.work_days = work_days
         self.owner_id = owner_id
+        self.max_seats = max_seats
 
 class Reservation(db.Model):
     __tablename__ = "reservations"
