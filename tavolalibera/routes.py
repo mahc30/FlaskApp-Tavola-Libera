@@ -1,6 +1,6 @@
 from flask import render_template, url_for, redirect, flash, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
-from tavolalibera.models import Restaurant,Reservation,Security_Question,User
+from tavolalibera.models import Restaurant,Reservation,Security_Question, User, Dish
 from tavolalibera.forms import RegisterForm, LoginForm, CreateRestaurantForm
 from tavolalibera import app, db, bcrypt
 from datetime import datetime
@@ -23,17 +23,22 @@ def home():
 def login():
     form = LoginForm()
 
+    if request.method == 'GET':
+        return render_template("login.html", form=form)
+    
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             return redirect(url_for("home"))
+    
     flash("Usuario o Contraseña Incorrectos", "danger")
-    return render_template("login.html", form=form)
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegisterForm()
+    if request.method == 'GET':
+        return render_template('register.html', form=form)
 
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -42,9 +47,8 @@ def register():
         db.session.commit()
         flash("Your account has been created successfully ! You are now able to login", "info")
         return redirect(url_for("login"))
-    else:
-        flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
-    return render_template('register.html', form=form)
+    
+    flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
 
 @app.route('/register/restaurant', methods=['GET', 'POST'])
 #@login_required
