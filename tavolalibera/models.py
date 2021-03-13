@@ -48,24 +48,26 @@ class Restaurant(db.Model):
     name = db.Column(db.String(124), nullable=False)
     address = db.Column(db.String(124), nullable=False)
     phone_number = db.Column(db.String(124), nullable=False)
-    #city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable = False) #TODO migration
-    #city = db.relationship("City", backref = db.backref("restaurant", uselist= False)) #TODO migration
+    city_id = db.Column(db.Integer, db.ForeignKey('cities.id'), nullable = False)
+    city = db.relationship("City", backref = db.backref("restaurant", uselist= False))
     opening_hour = db.Column(db.Time, nullable=False)
     closing_hour = db.Column(db.Time, nullable=False)
     work_days = db.Column(db.String(124), nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     owner = db.relationship("User",backref=db.backref("restaurant", uselist=False))
-    #max_seats = db.Column(db.Integer, nullable = False) #TODO migration
-
-
-    def __init__(self, name, address, phone_number, opening_hour, closing_hour, work_days, owner_id):
+    max_seats = db.Column(db.Integer, nullable = False)
+    image_url = db.Column(db.String(1024), nullable=True, default="https://via.placeholder.com/300")
+    
+    def __init__(self, name, address, phone_number, city_id, opening_hour, closing_hour, work_days, owner_id, max_seats):
         self.name = name
         self.address = address
         self.phone_number = phone_number
+        self.city_id = city_id
         self.opening_hour = opening_hour
         self.closing_hour = closing_hour
         self.work_days = work_days
         self.owner_id = owner_id
+        self.max_seats = max_seats
 
 class Reservation(db.Model):
     __tablename__ = "reservations"
@@ -88,7 +90,7 @@ class Dish(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(124), nullable=False)
     description = db.Column(db.String(1024), nullable=True)
-    # image_url = db.Column(db.String(1024), nullable=True) #TODO migration
+    image_url = db.Column(db.String(1024), nullable=True, default="https://via.placeholder.com/300")
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     restaurant = db.relationship("Restaurant", backref=db.backref("dish", uselist=False))
     
@@ -97,8 +99,13 @@ class Dish(db.Model):
         self.description = description
         self.restaurant_id = restaurant_id
 
+class City(db.Model):
+    __tablename__ = "cities"
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(124), nullable=False)
+    
 # # Create DB
 # # This MUST not be in production
-print("Creating Tables")
-db.create_all()
-print("TABLES CREATED")
+# print("Creating Tables")
+# db.create_all()
+# print("TABLES CREATED")

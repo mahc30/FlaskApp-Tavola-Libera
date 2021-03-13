@@ -36,9 +36,7 @@
 
             </div>
 
-            {# Borrar este comentario cuando se actualize la base de datos con el modelo que si tiene en cuenta el campo ciudad
-
-            <div class="row form-group">
+            <div class="row form-group ">
 
                 {{form.city.label(class="form-control-label") }} {% if form.city.errors %} {{form.city(class="form-control form-control-lg is-invalid")}}
                 <div class="invalid-feedback">
@@ -48,8 +46,6 @@
                 {% else %} {{ form.city(class="form-control form-control-lg") }} {% endif %}
 
             </div>
-            #}
-
     </section>
 
     <!-- Segunda página del formulario -->
@@ -125,8 +121,7 @@
                 {% else %} {{ form.closing_hour(class="form-control form-control-lg") }} {% endif %}
             </div>
 
-            {# Borrar este comentario cuando se actualize la base de datos con el modelo que si tiene en cuenta el campo ciudad
-            <div class="row form-group">
+            <div class="row form-group my-4 ps-2">
 
                 {{ form.max_seats.label(class="form-control-label") }} {% if form.max_seats.errors %} {{form.max_seats(class="form-control form-control-lg is-invalid") }}
                 <div class="invalid-feedback">
@@ -136,7 +131,8 @@
                 {% else %} {{ form.max_seats(class="form-control form-control-lg") }} {% endif %}
 
             </div>
-            #} {{ form.submit(class="btn btn-outline-dark") }}
+
+            {{ form.submit(class="btn btn-outline-dark my-2") }}
         </div>
     </section>
 
