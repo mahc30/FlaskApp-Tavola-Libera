@@ -48,9 +48,9 @@ class CreateRestaurantForm(FlaskForm):
         "Número de teléfono", validators=[DataRequired(), Length(min=2, max=12)]
     )
     
-    # city = SelectField(
-    #     "Ciudad", validators=[DataRequired()], choices=[(1, 'Medellín'), (2, 'Bogotá'), (3, 'Dubai')]
-    # )
+    city = SelectField(
+        "Ciudad", validators=[DataRequired()], choices=[(1, 'Medellín'), (2, 'Bogotá'), (3, 'Dubai')]
+    )
     
     sunday_work_day = BooleanField(
         "sunday_work_day"
@@ -88,8 +88,8 @@ class CreateRestaurantForm(FlaskForm):
         "Hasta", validators = [DataRequired()],format='%H:%M' 
     )
     
-    # max_seats = IntegerField(
-    #     "Aforo Máximo"
-    # )
+    max_seats = IntegerField(
+        "Aforo Máximo"
+    )
     
     submit = SubmitField("Completar")
