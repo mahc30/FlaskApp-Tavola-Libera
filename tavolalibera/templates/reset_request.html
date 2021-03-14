@@ -1,9 +1,11 @@
-{% extends "layout.html" %} {% block title %} Login Page {% endblock %} {% block content %}
+{% extends "layout.html" %}
+{% block title %} Forgotpassword Page{% endblock %}
+{% block content %}
 <div class="content-section">
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4">Log In</legend>
+            <legend class="border-bottom mb-4">Reset Password</legend>
             <div class="form-group mt-2">
                 {{ form.username.label(class="form-control-label") }}
                 {% if form.username.errors %}
@@ -18,27 +20,21 @@
                 {% endif %}
             </div>
             <div class="form-group mt-2">
-                {{ form.password.label(class="form-control-label") }} {% if form.password.errors %} {{
-                form.password(class="form-control form-control-lg is-invalid") }}
+                {{form.security_answer.label(class="form-control-label") }}
+                {% if form.security_answer.errors %}
+                {{form.security_answer(class="form-control form-control-lg is-invalid")}}
                 <div class="invalid-feedback">
-                    {% for error in form.password.errors %}
+                    {% for error in form.security_answer.errors %}
                     <span>{{ error }}</span> {% endfor %}
                 </div>
-                {% else %} {{ form.password(class="form-control form-control-lg") }} {% endif %}
-            </div>
-            <div class="form-check mt-3 mb-4">
-                {{ form.remember(class="form-check-input") }} {{ form.remember.label(class="form-check-label") }}
+                {% else %}
+                {{ form.security_answer(class="form-control form-control-lg") }}
+                {% endif %}
             </div>
         </fieldset>
-        <div class="form-group mb-2">
+        <div class="form-group mb-2 mt-2">
             {{ form.submit(class="btn btn-outline-info") }}
         </div>
-        <small class="text-muted ml-2">
-            <a href="{{url_for('reset_request')}}">¿Olvidó su contraseña?</a>
-        </small>
-        <small class="text-muted ml-2">
-            <a href="{{url_for('register')}}">Registrarse</a>
-        </small>
     </form>
 </div>
 {% endblock content %}
