@@ -23,6 +23,9 @@ def home():
 def login():
     form = LoginForm()
 
+    if request.method == 'GET':
+        return render_template("login.html", form=form)
+    
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
@@ -30,11 +33,12 @@ def login():
             return redirect(url_for("home"))
         else:
             flash("Usuario o Contraseña Incorrectos", "danger")
-    return render_template("login.html", form=form)
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
     form = RegisterForm()
+    if request.method == 'GET':
+        return render_template('register.html', form=form)
 
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
@@ -43,9 +47,11 @@ def register():
         db.session.commit()
         flash("Your account has been created successfully ! You are now able to login", "info")
         return redirect(url_for("login"))
-    #else:
-        #flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
-    return render_template('register.html', form=form)
+    else:
+        flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
+        return render_template('register.html', form=form)
+        
+    
 
 @app.route('/register/restaurant', methods=['GET', 'POST'])
 @login_required
