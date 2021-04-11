@@ -38,8 +38,8 @@ class RegisterForm(FlaskForm):
 
 class ReservationForm(FlaskForm):
     date = DateField('Fecha', format='%Y-%m-%d',  validators=[DataRequired()])
-    start_time = TimeField("Hora comienzo", validators=[DataRequired()])
-    end_time = TimeField("Hora finalización", validators=[DataRequired()])
+    start_time = TimeField("Hora comienzo", validators=[DataRequired()],format='%H:%M')
+    end_time = TimeField("Hora finalización", validators=[DataRequired()],format='%H:%M')
     num_people = IntegerField("Cantidad de personas", validators=[DataRequired()])
     lista_platos = SelectField(
         "Agregar platos", validators=[DataRequired()], choices=[(1, ''), (2, ''), (3, '')]
