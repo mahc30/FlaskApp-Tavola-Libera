@@ -92,6 +92,7 @@ class Reservation(db.Model):
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     start_hour = db.Column(db.DateTime, nullable = False, primary_key = True) #PK
     finish_hour = db.Column(db.DateTime, nullable = False)
+    num_people = (db.Integer, nullable=False)
     restaurant =  db.relationship("Restaurant", backref=db.backref("reservation", uselist=False))
 
     __table_args__ = (
@@ -121,5 +122,5 @@ class City(db.Model):
 # # Create DB
 # # This MUST not be in production
 # print("Creating Tables")
-# db.create_all()
+ db.create_all()
 # print("TABLES CREATED")

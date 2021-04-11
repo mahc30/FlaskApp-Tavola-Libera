@@ -43,15 +43,15 @@
                 {% endif %}
             </div>
             <div class="form-group mt-2">
-                {{form.num_personas.label(class="form-control-label") }}
-                {% if form.num_personas.errors %}
-                {{form.num_personas(class="form-control form-control-lg is-invalid")}}
+                {{form.num_people.label(class="form-control-label") }}
+                {% if form.num_people.errors %}
+                {{form.num_people(class="form-control form-control-lg is-invalid")}}
                 <div class="invalid-feedback">
-                    {% for error in form.num_personas.errors %}
+                    {% for error in form.num_people.errors %}
                     <span>{{ error }}</span> {% endfor %}
                 </div>
                 {% else %}
-                {{ form.num_personas(class="form-control form-control-lg") }}
+                {{ form.num_people(class="form-control form-control-lg") }}
                 {% endif %}
             </div>
             <div class="form-group mt-2">
