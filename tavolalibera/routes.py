@@ -18,6 +18,11 @@ def home():
 #    form = LoginForm()
 #    return render_template("login.html", form = form)  
 
+
+
+     
+
+
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -57,11 +62,23 @@ def register():
 @login_required
 def reservation():
     form = ReservationForm()
+    restaurant = Restaurant.query.filter_by(name="Miguel").first()
     if request.method == 'GET':
         return render_template('reservation.html', form=form)
     
     if form.validate_on_submit():
-        reservation = Reservation(user_id=current_user.id,user=current_user.name,day=form.date.data,restaurant_id=None,start_hour=form.start_time.data,finish_hour=form.end_time.data,restaurant = None)
+        if current_user.is_authenticated:
+            reservation = Reservation(
+            user_id = current_user.id,
+            day=form.date.data,
+            restaurant_id = restaurant.id,
+            start_hour=form.start_time.data,
+            finish_hour=form.end_time.data,
+            num_people = form.num_people.data,
+           
+            )
+        else:
+            flask("No user login")
         db.session.add(reservation)
         db.session.commit()
         flash("Your reservation has been created successfully!")
