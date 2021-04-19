@@ -95,7 +95,6 @@ class Reservation(db.Model):
     finish_hour = db.Column(db.Time(), nullable = False)
     num_people = db.Column(db.Integer,nullable = False)
     
-
     __table_args__ = (
     db.PrimaryKeyConstraint(user_id, day, start_hour),
     )
@@ -123,5 +122,5 @@ class City(db.Model):
 # # Create DB
 # # This MUST not be in production
 # print("Creating Tables")
-db.create_all()
+# db.create_all()
 # print("TABLES CREATED")

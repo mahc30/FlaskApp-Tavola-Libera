@@ -75,14 +75,13 @@ def reservation():
             start_hour=form.start_time.data,
             finish_hour=form.end_time.data,
             num_people = form.num_people.data,
-           
             )
         else:
             flask("No user login")
         db.session.add(reservation)
         db.session.commit()
         flash("Your reservation has been created successfully!")
-        return redirect(url_for("reservation.html"))
+        return redirect(url_for("reservation"))
     else:
         flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
         return render_template('reservation.html', form=form)

@@ -6,3 +6,8 @@ venv
 .vscode/*.json
 tavolalibera/test.db
 tavolalibera/__pycache__
+android
+android_assets
+android_keys
+node_modules
+www
