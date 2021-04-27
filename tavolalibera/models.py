@@ -83,6 +83,8 @@ class Restaurant(db.Model):
         self.owner_id = owner_id
         self.max_seats = max_seats
 
+     
+
 class Reservation(db.Model):
     __tablename__ = "reservations"
 

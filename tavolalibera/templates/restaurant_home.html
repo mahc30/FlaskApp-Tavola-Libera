@@ -2,15 +2,14 @@
 <section id="restaurante">
     <h2 class="px-4 my-4">Restaurante</h2>
     <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt="">
-    <p class="px-2">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-    </p>
+    <p class="px-2">{{rst_name}}</p>
     <div class="border-top pt-3">
-        <a href="javascript:void(0);" id="btn_menu" class="px-2 text-dark">
+        <a href="{{url_for('dishes',restaurant_id = 0)}}" id="btn_menu" class="px-2 text-dark">
             <h4><strong>Ver Menú</strong></h4>
         </a>
     </div>
     <div class="border-top pt-3">
-        <a href="javascript:void(0);" id="btn_reserva" class="px-2 text-dark">
+        <a href="{{url_for('reservation')}}" id="btn_reserva" class="px-2 text-dark">
             <h4><strong>Reservas</strong></h4>
         </a>
     </div>

@@ -35,7 +35,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for("home"))
+            return redirect(url_for("restaurants"))
         else:
             flash("Usuario o Contraseña Incorrectos", "danger")
 
@@ -101,7 +101,7 @@ def register_restaurant():
         restaurant = Restaurant(
             name = form.name.data,
             address = form.address.data,
-            phone_number = form.phon<e_number.data,
+            phone_number = form.phone_number.data,
             city_id = form.city.data,
             opening_hour = form.opening_hour.data,
             closing_hour = form.closing_hour.data,
@@ -122,6 +122,14 @@ def register_restaurant():
 def logout():
     logout_user()
     return redirect(url_for("login"))
+
+
+@app.route('/restaurant_home/<restaurant_name>', methods=["GET"])
+@login_required
+def restaurant_home(restaurant_name):
+    rst_name = Restaurant.query.filter_by(name=f"{restaurant_name}").first().name
+    return render_template('restaurant_home.html',rst_name = rst_name)
+
 
 @app.route('/restaurants', methods=["GET"])
 @login_required
