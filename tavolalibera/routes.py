@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from tavolalibera.models import Restaurant,Reservation,Security_Question,User, Dish
-from tavolalibera.forms import RegisterForm, LoginForm, CreateRestaurantForm, RequestResetForm, ResetPasswordForm
+from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, RequestResetForm, ResetPasswordForm
 from tavolalibera import app, db, bcrypt
 from datetime import datetime
 
@@ -17,6 +17,11 @@ def home():
 # def index():
 #    form = LoginForm()
 #    return render_template("login.html", form = form)  
+
+
+
+     
+
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
@@ -50,7 +55,38 @@ def register():
     else:
         flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
         return render_template('register.html', form=form)
-        
+
+
+       
+@app.route('/reservation', methods=["GET", "POST"])
+@login_required
+def reservation():
+    form = ReservationForm()
+    restaurant = Restaurant.query.filter_by(name="Miguel").first()
+    if request.method == 'GET':
+        return render_template('reservation.html', form=form)
+    
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            reservation = Reservation(
+            user_id = current_user.id,
+            day=form.date.data,
+            restaurant_id = restaurant.id,
+            start_hour=form.start_time.data,
+            finish_hour=form.end_time.data,
+            num_people = form.num_people.data,
+            )
+        else:
+            flask("No user login")
+        db.session.add(reservation)
+        db.session.commit()
+        flash("Your reservation has been created successfully!")
+        return redirect(url_for("reservation"))
+    else:
+        flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
+        return render_template('reservation.html', form=form)
+
+    
     
 
 @app.route('/register/restaurant', methods=['GET', 'POST'])
@@ -65,7 +101,7 @@ def register_restaurant():
         restaurant = Restaurant(
             name = form.name.data,
             address = form.address.data,
-            phone_number = form.phone_number.data,
+            phone_number = form.phon<e_number.data,
             city_id = form.city.data,
             opening_hour = form.opening_hour.data,
             closing_hour = form.closing_hour.data,
