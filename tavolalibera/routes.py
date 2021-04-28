@@ -3,11 +3,6 @@ from flask_login import login_user, current_user, logout_user, login_required
 from tavolalibera.models import Restaurant,Reservation,Security_Question,User, Dish
 from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, RequestResetForm, ResetPasswordForm
 from tavolalibera import app, db, bcrypt
-
-@app.route("/", methods=["GET", "POST"])
-def index():
-    pass
-
 from datetime import datetime
 
 @app.route("/home", methods=["GET"])
@@ -30,6 +25,7 @@ def debug():
 
     return render_template("register.html", form=form)
 
+@app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
