@@ -12,7 +12,7 @@ params = urllib.parse.quote_plus(
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "82c021c5452b33eb5c34b1c9abc2e276"
 app.config['SQLALCHEMY_DATABASE_URI'] = "mssql+pyodbc:///?odbc_connect=%s" % params
-app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)

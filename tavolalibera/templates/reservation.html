@@ -1,0 +1,77 @@
+{% extends "layout.html" %} {% block title %} Reserva {% endblock %} {% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Reserva</legend>
+            <div class="form-group mt-2">
+                {{ form.date.label(class="form-control-label") }}
+                {% if form.date.errors %}
+                {{form.date(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.date.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.date(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group mt-2">
+                {{form.start_time.label(class="form-control-label") }}
+                {% if form.start_time.errors %}
+                {{form.start_time(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.start_time.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.start_time(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group mt-2">
+                {{form.end_time.label(class="form-control-label") }}
+                {% if form.end_time.errors %}
+                {{form.end_time(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.end_time.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %}
+                {{ form.end_time(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group mt-2">
+                {{form.num_people.label(class="form-control-label") }}
+                {% if form.num_people.errors %}
+                {{form.num_people(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.num_people.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %}
+                {{ form.num_people(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group mt-2">
+                {{form.lista_platos.label(class="form-control-label") }}
+                {% if form.lista_platos.errors %}
+                {{form.lista_platos(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.lista_platos.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %}
+                {{ form.lista_platos(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            
+        </fieldset>
+        <div class="form-group pt-3 mb-2">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

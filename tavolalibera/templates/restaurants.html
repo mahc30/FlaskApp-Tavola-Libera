@@ -1,0 +1,31 @@
+{% extends "layout.html" %} {% block title %} Restaurantes {% endblock %} {% block content %}
+<section id="lista_restaurantes" class="overflow-auto ocultar">
+    <a name="" id="" class="btn btn-dark volver" href="javascript:void(0);" role="button">&lt;--</a>
+    <h2 class="px-4 my-4">Lista Restaurantes</h2>
+
+    {% for restaurant in restaurants %}
+    <div class="container">
+        <div class="row">
+            <div class="col border-top pt-3">
+                <h4 class="px-2">{{restaurant.name}}</h4>
+                <span>{{restaurant.opening_hour}}</span>
+                <span>{{restaurant.closing_hour}}</span>
+                <p class="px-2 my-auto">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                </p>
+            </div>
+            <div class="col">
+                <p>
+                    <a id="btn_restaurante" href="{{url_for('restaurant_home',restaurant_name = restaurant.name)}}">
+                        
+                        <img src={{restaurant.image_url}} class="rounded mx-auto d-block" alt="">
+                       
+                     
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+{% endblock content %}

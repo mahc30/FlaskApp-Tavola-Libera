@@ -1,0 +1,141 @@
+ {% extends "layout.html" %} {% block title %} Registro Restaurante {% endblock %} {% block content %}
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+
+    <!-- Primera página del formulario -->
+    <section class="">
+        <h2 class="px-4 my-4">Registrar nuevo Restaurante</h2>
+
+        <div class="container">
+            <div class="row form-group">
+                {{ form.name.label(class="form-control-label") }} {% if form.name.errors %} {{form.name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.name.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.name(class="form-control form-control-lg") }} {% endif %}
+
+            </div>
+            <div class="row form-group">
+
+                {{ form.address.label(class="form-control-label") }} {% if form.address.errors %} {{form.address(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.address.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.address(class="form-control form-control-lg") }} {% endif %}
+            </div>
+            <div class="row form-group">
+
+                {{ form.phone_number.label(class="form-control-label") }} {% if form.phone_number.errors %} {{form.phone_number(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.phone_number.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.phone_number(class="form-control form-control-lg") }} {% endif %}
+
+            </div>
+
+            <div class="row form-group ">
+
+                {{form.city.label(class="form-control-label") }} {% if form.city.errors %} {{form.city(class="form-control form-control-lg is-invalid")}}
+                <div class="invalid-feedback">
+                    {% for error in form.city.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.city(class="form-control form-control-lg") }} {% endif %}
+
+            </div>
+    </section>
+
+    <!-- Segunda página del formulario -->
+
+    <section class="">
+        <h2 class="px-4 my-4">Finalización Registro de Restaurante</h2>
+
+        <div class="container">
+            <div class="row form-group form-inline">
+                <div class="col">D</div>
+                <div class="col">L</div>
+                <div class="col">M</div>
+                <div class="col">M</div>
+                <div class="col">J</div>
+                <div class="col">V</div>
+                <div class="col">S</div>
+            </div>
+            <div class="row form-group form-inline mb-4">
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                        {{ form.sunday_work_day }}
+                    </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                        {{ form.monday_work_day }}
+                    </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                        {{ form.tuesday_work_day }}
+                    </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                        {{ form.wednesday_work_day }}
+                    </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                        {{ form.thursday_work_day }}
+                    </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                        {{ form.friday_work_day }}
+                    </label>
+                </div>
+                <div class="col form-check ms-2">
+                    <label class="form-check-label">
+                        {{ form.saturday_work_day }}
+                    </label>
+                </div>
+            </div>
+
+            <strong class="my-4">Horario de Atención</strong>
+            <div class="form-group row mt-2 ps-2">
+
+                {{ form.opening_hour.label(class="form-control-label") }} {% if form.opening_hour.errors %} {{form.opening_hour(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.opening_hour.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.opening_hour(class="form-control form-control-lg") }} {% endif %}
+
+            </div>
+            <div class="form-group row my-4 ps-2">
+                {{ form.closing_hour.label(class="form-control-label") }} {% if form.closing_hour.errors %} {{form.closing_hour(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.closing_hour.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.closing_hour(class="form-control form-control-lg") }} {% endif %}
+            </div>
+
+            <div class="row form-group my-4 ps-2">
+
+                {{ form.max_seats.label(class="form-control-label") }} {% if form.max_seats.errors %} {{form.max_seats(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.max_seats.errors %}
+                    <span>{{ error }}</span> {% endfor %}
+                </div>
+                {% else %} {{ form.max_seats(class="form-control form-control-lg") }} {% endif %}
+
+            </div>
+
+            {{ form.submit(class="btn btn-outline-dark my-2") }}
+        </div>
+    </section>
+
+</form>
+
+{% endblock content %}
