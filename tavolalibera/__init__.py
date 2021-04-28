@@ -6,7 +6,7 @@ from flask_login import LoginManager
 
 # Configure Database URI:
 params = urllib.parse.quote_plus(
-    "Driver={SQL Server};Server=tcp:tavolalibera.database.windows.net,1433;Database=TavolaLiberaDB;Uid=dreamteam;Pwd=Password1;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
+    "Driver={ODBC Driver 17 for SQL Server};Server=tcp:tavolalibera.database.windows.net,1433;Database=TavolaLiberaDB;Uid=dreamteam;Pwd=Password1;Encrypt=yes;TrustServerCertificate=no;Connection Timeout=30;"
 )
 
 app = Flask(__name__)
