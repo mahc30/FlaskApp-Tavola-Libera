@@ -38,6 +38,7 @@ def login():
             return redirect(url_for("restaurants"))
         else:
             flash("Usuario o Contraseña Incorrectos", "danger")
+            return render_template("login.html", form=form)
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
@@ -58,11 +59,11 @@ def register():
 
 
        
-@app.route('/reservation', methods=["GET", "POST"])
+@app.route('/reservation/<restaurant_id>', methods=["GET", "POST"])
 @login_required
-def reservation():
+def reservation(restaurant_id):
     form = ReservationForm()
-    restaurant = Restaurant.query.filter_by(name="Miguel").first()
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
     if request.method == 'GET':
         return render_template('reservation.html', form=form)
     
@@ -86,8 +87,39 @@ def reservation():
         flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
         return render_template('reservation.html', form=form)
 
-    
-    
+@app.route('/redirect/dishes/<restaurant_id>', methods=['GET'])
+@login_required
+def redirect_dishes(restaurant_id):
+    restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
+    if restaurant and restaurant.owner_id == current_user.id:
+        return redirect(url_for("dishes_admin", restaurant_id=restaurant_id))
+    else:
+        return redirect(url_for("dishes", restaurant_id=restaurant_id))
+
+@app.route('/redirect/restaurant', methods=['GET'])
+@login_required
+def redirect_restaurant():
+    restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
+    if restaurant:
+        return redirect(url_for("restaurant_home", restaurant_id=restaurant.id))
+    else:
+        return redirect(url_for("register_restaurant"))
+
+@app.route('/redirect/reservation/<restaurant_id>', methods=['GET'])
+@login_required
+def redirect_reservation(restaurant_id):
+    restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
+    if restaurant and restaurant.owner_id == current_user.id:
+        return redirect(url_for("reservation_admin", restaurant_id=restaurant.id))
+    else:
+        return redirect(url_for("reservation", restaurant_id=restaurant.id))
+
+@app.route('/reservation_admin/<restaurant_id>', methods=['GET'])
+@login_required
+def reservation_admin(restaurant_id):
+    books = Reservation.query.filter_by(restaurant_id=restaurant_id)
+    return render_template("reservation_admin.html", books=books)
+
 
 @app.route('/register/restaurant', methods=['GET', 'POST'])
 @login_required
@@ -112,8 +144,8 @@ def register_restaurant():
             
         db.session.add(restaurant)
         db.session.commit()
-        flash("¡El Restaurante se ha creado correctamente!")
-        return render_template('restaurant_home.html')
+        flash("¡El Restaurante se ha creado correctamente!", "info" )
+        return redirect(url_for("restaurants"))
     else:
         flash(form.errors, "danger")
         return render_template('register_restaurant.html', form = form)
@@ -124,27 +156,30 @@ def logout():
     return redirect(url_for("login"))
 
 
-@app.route('/restaurant_home/<restaurant_name>', methods=["GET"])
+@app.route('/restaurant_home/<restaurant_id>', methods=["GET"])
 @login_required
-def restaurant_home(restaurant_name):
-    rst_name = Restaurant.query.filter_by(name=f"{restaurant_name}").first().name
-    return render_template('restaurant_home.html',rst_name = rst_name)
+def restaurant_home(restaurant_id):
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
+    return render_template('restaurant_home.html',restaurant=restaurant)
 
 
 @app.route('/restaurants', methods=["GET"])
 @login_required
 def restaurants():
-   
    restaurants = Restaurant.query.all()
-   
    return render_template('restaurants.html', restaurants = restaurants)
 
 @app.route('/dishes/<restaurant_id>', methods=["GET"])
 @login_required
 def dishes(restaurant_id):
     dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
-    
     return render_template('dishes.html', dishes = dishes)
+
+@app.route('/dishes_admin/<restaurant_id>', methods=["GET"])
+@login_required
+def dishes_admin(restaurant_id):
+    dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
+    return render_template('dishes_admin.html', dishes = dishes)
 
 @app.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():

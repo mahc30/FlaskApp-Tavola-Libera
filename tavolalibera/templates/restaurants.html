@@ -1,6 +1,5 @@
 {% extends "layout.html" %} {% block title %} Restaurantes {% endblock %} {% block content %}
 <section id="lista_restaurantes" class="overflow-auto ocultar">
-    <a name="" id="" class="btn btn-dark volver" href="javascript:void(0);" role="button">&lt;--</a>
     <h2 class="px-4 my-4">Lista Restaurantes</h2>
 
     {% for restaurant in restaurants %}
@@ -16,7 +15,7 @@
             </div>
             <div class="col">
                 <p>
-                    <a id="btn_restaurante" href="{{url_for('restaurant_home',restaurant_name = restaurant.name)}}">
+                    <a id="btn_restaurante" href="{{url_for('restaurant_home',restaurant_id = restaurant.id)}}">
                         
                         <img src={{restaurant.image_url}} class="rounded mx-auto d-block" alt="">
                        
