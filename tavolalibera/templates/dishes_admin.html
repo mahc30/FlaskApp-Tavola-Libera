@@ -1,4 +1,4 @@
-{% extends "layout.html" %} {% block title %} Platos {% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title %} Platos  {% endblock %} {% block content %}
 <section id="lista_restaurantes" class="overflow-auto ocultar">
     <h2 class="px-4 my-4">Lista Platos</h2>
 
@@ -26,5 +26,24 @@
         </div>
     </div>
     {% endfor %}
+    <div class="form-group row my-4 admin_mode">
+        <div id="btn_turn_agregar_plato" class="col-10 mx-auto">
+            <a href=" javascript:void(0);" class="btn btn-default w-100">Agregar Plato</a>
+        </div>
+    </div>
+
+    <div id="agregar_plato_container" class="container border-top pt-3 ocultar">
+        <div class="row my-4 mx-auto w-75">
+            <input class="form-control mx-auto" type="text" id="input_agregar_plato_name" placeholder="Nombre del Plato">
+        </div>
+
+        <div class="row my-4 mx-auto w-75">
+            <input class="form-control mx-auto" type="text" id="input_agregar_plato_desc" placeholder="Descripción del Plato">
+        </div>
+
+        <div id="btn_confirmar_agregar_plato" class="col-10 mx-auto">
+            <a href=" javascript:void(0);" class="btn btn-default w-100">Confirmar</a>
+        </div>
+    </div>
 </section>
 {% endblock content %}

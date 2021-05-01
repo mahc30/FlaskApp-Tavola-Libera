@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from tavolalibera.models import Restaurant,Reservation,Security_Question,User, Dish
-from tavolalibera.forms import RegisterForm, LoginForm, CreateRestaurantForm, RequestResetForm, ResetPasswordForm
+from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, RequestResetForm, ResetPasswordForm
 from tavolalibera import app, db, bcrypt
 from datetime import datetime
 
@@ -18,6 +18,11 @@ def home():
 #    form = LoginForm()
 #    return render_template("login.html", form = form)  
 
+
+
+     
+
+
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -30,9 +35,10 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for("home"))
+            return redirect(url_for("restaurants"))
         else:
             flash("Usuario o Contraseña Incorrectos", "danger")
+            return render_template("login.html", form=form)
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
@@ -50,8 +56,70 @@ def register():
     else:
         flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
         return render_template('register.html', form=form)
-        
+
+
+       
+@app.route('/reservation/<restaurant_id>', methods=["GET", "POST"])
+@login_required
+def reservation(restaurant_id):
+    form = ReservationForm()
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
+    if request.method == 'GET':
+        return render_template('reservation.html', form=form)
     
+    if form.validate_on_submit():
+        if current_user.is_authenticated:
+            reservation = Reservation(
+            user_id = current_user.id,
+            day=form.date.data,
+            restaurant_id = restaurant.id,
+            start_hour=form.start_time.data,
+            finish_hour=form.end_time.data,
+            num_people = form.num_people.data,
+            )
+        else:
+            flask("No user login")
+        db.session.add(reservation)
+        db.session.commit()
+        flash("Your reservation has been created successfully!")
+        return redirect(url_for("reservation"))
+    else:
+        flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
+        return render_template('reservation.html', form=form)
+
+@app.route('/redirect/dishes/<restaurant_id>', methods=['GET'])
+@login_required
+def redirect_dishes(restaurant_id):
+    restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
+    if restaurant and restaurant.owner_id == current_user.id:
+        return redirect(url_for("dishes_admin", restaurant_id=restaurant_id))
+    else:
+        return redirect(url_for("dishes", restaurant_id=restaurant_id))
+
+@app.route('/redirect/restaurant', methods=['GET'])
+@login_required
+def redirect_restaurant():
+    restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
+    if restaurant:
+        return redirect(url_for("restaurant_home", restaurant_id=restaurant.id))
+    else:
+        return redirect(url_for("register_restaurant"))
+
+@app.route('/redirect/reservation/<restaurant_id>', methods=['GET'])
+@login_required
+def redirect_reservation(restaurant_id):
+    restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
+    if restaurant and restaurant.owner_id == current_user.id:
+        return redirect(url_for("reservation_admin", restaurant_id=restaurant.id))
+    else:
+        return redirect(url_for("reservation", restaurant_id=restaurant.id))
+
+@app.route('/reservation_admin/<restaurant_id>', methods=['GET'])
+@login_required
+def reservation_admin(restaurant_id):
+    books = Reservation.query.filter_by(restaurant_id=restaurant_id)
+    return render_template("reservation_admin.html", books=books)
+
 
 @app.route('/register/restaurant', methods=['GET', 'POST'])
 @login_required
@@ -76,8 +144,8 @@ def register_restaurant():
             
         db.session.add(restaurant)
         db.session.commit()
-        flash("¡El Restaurante se ha creado correctamente!")
-        return render_template('restaurant_home.html')
+        flash("¡El Restaurante se ha creado correctamente!", "info" )
+        return redirect(url_for("restaurants"))
     else:
         flash(form.errors, "danger")
         return render_template('register_restaurant.html', form = form)
@@ -87,20 +155,31 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
+
+@app.route('/restaurant_home/<restaurant_id>', methods=["GET"])
+@login_required
+def restaurant_home(restaurant_id):
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
+    return render_template('restaurant_home.html',restaurant=restaurant)
+
+
 @app.route('/restaurants', methods=["GET"])
 @login_required
 def restaurants():
-   
    restaurants = Restaurant.query.all()
-   
    return render_template('restaurants.html', restaurants = restaurants)
 
 @app.route('/dishes/<restaurant_id>', methods=["GET"])
 @login_required
 def dishes(restaurant_id):
     dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
-    
     return render_template('dishes.html', dishes = dishes)
+
+@app.route('/dishes_admin/<restaurant_id>', methods=["GET"])
+@login_required
+def dishes_admin(restaurant_id):
+    dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
+    return render_template('dishes_admin.html', dishes = dishes)
 
 @app.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():

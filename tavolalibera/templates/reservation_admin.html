@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %} Reservation Admin {% endblock %}
+{% block content %}
+<h2 class="px-4 my-4">Reservas</h2>
+
+<div>
+    {% for book in books %}
+    <hr>
+    <div class="row my-2">
+        <div class="col">
+            <strong>Fecha</strong>
+        </div>
+        <div class="col">
+            <span class="text-left">{{ book.day }}</span>
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col">
+            <strong>Hora Inicio</strong>
+        </div>
+        <div class="col">
+            <span class="text-left">{{ book.start_hour }}</span>
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col">
+            <strong>Hora Final</strong>
+        </div>
+        <div class="col">
+            <span class="text-left">{{ book.finish_hour }}</span>
+        </div>
+    </div>
+    <div class="row my-2">
+        <div class="col">
+            <strong>Número de Persona(s)</strong>
+        </div>
+        <div class="col">
+            <span class="text-left">{{ book.num_people }}</span>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock content %}

@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField, SelectField, TimeField
+from wtforms import StringField,PasswordField, SubmitField, BooleanField, IntegerField, SelectField
+from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, Length, InputRequired, EqualTo, ValidationError, Regexp
 from tavolalibera.models import User
 
@@ -33,6 +34,19 @@ class RegisterForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user:
             raise ValidationError("Este usuario ya existe, por favor elija otro")
+
+
+
+class ReservationForm(FlaskForm):
+    date = DateField('Fecha',format='%Y-%m-%d',  validators=[DataRequired()],render_kw = {"placeholder":'2021-01-01'})
+    start_time = TimeField("Hora comienzo", validators=[DataRequired()],format='%H:%M', render_kw={"placeholder":'12:00'})
+    end_time = TimeField("Hora finalización", validators=[DataRequired()],format='%H:%M',render_kw={"placeholder":'00:00'})
+    num_people = IntegerField("Cantidad de personas", validators=[DataRequired()])
+    lista_platos = SelectField(
+        "Agregar platos", validators=[DataRequired()], choices=[(1, 'Plato 1'), (2, 'Plato 2'), (3, 'Plato 3')]
+    )
+    submit = SubmitField("Book")
+
 
 class RequestResetForm(FlaskForm):
     username = StringField(

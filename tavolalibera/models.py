@@ -83,6 +83,8 @@ class Restaurant(db.Model):
         self.owner_id = owner_id
         self.max_seats = max_seats
 
+     
+
 class Reservation(db.Model):
     __tablename__ = "reservations"
 
@@ -90,10 +92,11 @@ class Reservation(db.Model):
     user = db.relationship("User", backref=db.backref("reservation", uselist=False))
     day = db.Column(db.Date, nullable = False, primary_key = True) #PK
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
-    start_hour = db.Column(db.DateTime, nullable = False, primary_key = True) #PK
-    finish_hour = db.Column(db.DateTime, nullable = False)
-    restaurant =  db.relationship("Restaurant", backref=db.backref("reservation", uselist=False))
-
+    restaurant =  db.relationship("Restaurant", backref=db.backref("reservation", uselist=False))  
+    start_hour = db.Column(db.Time(), nullable = False, primary_key = True) #PK
+    finish_hour = db.Column(db.Time(), nullable = False)
+    num_people = db.Column(db.Integer,nullable = False)
+    
     __table_args__ = (
     db.PrimaryKeyConstraint(user_id, day, start_hour),
     )
