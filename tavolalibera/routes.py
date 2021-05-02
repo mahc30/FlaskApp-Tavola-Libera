@@ -1,7 +1,7 @@
 from flask import render_template, url_for, redirect, flash, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from tavolalibera.models import Restaurant,Reservation,Security_Question,User, Dish
-from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, RequestResetForm, ResetPasswordForm
+from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, RequestResetForm, ResetPasswordForm, CreateDishForm
 from tavolalibera import app, db, bcrypt
 from datetime import datetime
 
@@ -175,11 +175,32 @@ def dishes(restaurant_id):
     dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
     return render_template('dishes.html', dishes = dishes)
 
-@app.route('/dishes_admin/<restaurant_id>', methods=["GET"])
+@app.route('/dishes_admin/<restaurant_id>', methods=["GET", "POST"])
 @login_required
 def dishes_admin(restaurant_id):
+    form = CreateDishForm()
     dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
-    return render_template('dishes_admin.html', dishes = dishes)
+
+    if request.method == 'GET':
+        return render_template('dishes_admin.html', form=form,dishes = dishes)
+
+    
+    if form.validate_on_submit():
+        dish = Dish(
+            name= form.name.data,
+            description = form.description.data,
+            restaurant_id = restaurant_id
+        )
+            
+        db.session.add(dish)
+        db.session.commit()
+        flash("Plato agregado", "info" )
+        return redirect(url_for("dishes_admin", restaurant_id=restaurant_id))
+    else:
+        flash(form.errors, "danger")
+        return render_template('dishes_admin.html', form=form,dishes = dishes)
+
+
 
 @app.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():

@@ -35,8 +35,6 @@ class RegisterForm(FlaskForm):
         if user:
             raise ValidationError("Este usuario ya existe, por favor elija otro")
 
-
-
 class ReservationForm(FlaskForm):
     date = DateField('Fecha',format='%Y-%m-%d',  validators=[DataRequired()],render_kw = {"placeholder":'2021-01-01'})
     start_time = TimeField("Hora comienzo", validators=[DataRequired()],format='%H:%M', render_kw={"placeholder":'12:00'})
@@ -116,3 +114,11 @@ class CreateRestaurantForm(FlaskForm):
     )
     submit = SubmitField("Completar")
 
+class CreateDishForm(FlaskForm):
+    name = StringField(
+        "Nombre del Plato", validators=[DataRequired(), Length(min=1, max=64), Regexp(r'^\w+$')]
+    )
+    description = StringField(
+        "Descripción del Plato", validators=[DataRequired(), Length(min=1, max=64), Regexp(r'^\w+$')]
+    )
+    submit = SubmitField("Confirmar")
