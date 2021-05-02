@@ -90,7 +90,7 @@ def reservation(restaurant_id):
 @app.route('/redirect/dishes/<restaurant_id>', methods=['GET'])
 @login_required
 def redirect_dishes(restaurant_id):
-    restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
     if restaurant and restaurant.owner_id == current_user.id:
         return redirect(url_for("dishes_admin", restaurant_id=restaurant_id))
     else:
@@ -108,7 +108,7 @@ def redirect_restaurant():
 @app.route('/redirect/reservation/<restaurant_id>', methods=['GET'])
 @login_required
 def redirect_reservation(restaurant_id):
-    restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
     if restaurant and restaurant.owner_id == current_user.id:
         return redirect(url_for("reservation_admin", restaurant_id=restaurant.id))
     else:
