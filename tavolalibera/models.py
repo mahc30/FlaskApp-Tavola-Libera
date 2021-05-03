@@ -70,7 +70,7 @@ class Restaurant(db.Model):
     owner_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     owner = db.relationship("User",backref=db.backref("restaurant", uselist=False))
     max_seats = db.Column(db.Integer, nullable = False)
-    image_url = db.Column(db.String(1024), nullable=True, default="https://via.placeholder.com/300")
+    image_url = db.Column(db.String(1024), nullable=True, default="restaurant_default_logo.png")
     
     def __init__(self, name, address, phone_number, city_id, opening_hour, closing_hour, work_days, owner_id, max_seats):
         self.name = name

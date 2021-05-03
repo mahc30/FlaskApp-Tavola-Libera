@@ -5,21 +5,16 @@
     {% for restaurant in restaurants %}
     <div class="container">
         <div class="row">
-            <div class="col border-top pt-3">
+            <div class="col border-top mt-2 mb-2 py-2">
                 <h4 class="px-2">{{restaurant.name}}</h4>
                 <span>{{restaurant.opening_hour}}</span>
                 <span>{{restaurant.closing_hour}}</span>
-                <p class="px-2 my-auto">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                </p>
+                <p class="px-2 my-auto">{{ restaurant.description }}</p>
             </div>
             <div class="col">
                 <p>
                     <a id="btn_restaurante" href="{{url_for('restaurant_home',restaurant_id = restaurant.id)}}">
-                        
-                        <img src={{restaurant.image_url}} class="rounded mx-auto d-block" alt="">
-                       
-                     
+                        <img src="{{url_for('static', filename='img/' + restaurant.image_url)}}" class="rounded mx-auto d-block article-img" alt="">
                     </a>
                 </p>
             </div>

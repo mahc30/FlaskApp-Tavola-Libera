@@ -1,7 +1,10 @@
+import os
+import secrets
+from PIL import Image
 from flask import render_template, url_for, redirect, flash, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from tavolalibera.models import Restaurant,Reservation,Security_Question,User, Dish
-from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, RequestResetForm, ResetPasswordForm, CreateDishForm
+from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, UpdateRestaurantForm, RequestResetForm, ResetPasswordForm, CreateDishForm
 from tavolalibera import app, db, bcrypt
 from datetime import datetime
 
@@ -17,11 +20,6 @@ def home():
 # def index():
 #    form = LoginForm()
 #    return render_template("login.html", form = form)  
-
-
-
-     
-
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
@@ -155,12 +153,39 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/img', picture_fn)
+    output_size = (125,125)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    
+    return picture_fn
 
-@app.route('/restaurant_home/<restaurant_id>', methods=["GET"])
+@app.route('/restaurant_home/<restaurant_id>', methods=["GET", "POST"])
 @login_required
 def restaurant_home(restaurant_id):
+    form = UpdateRestaurantForm()
     restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
-    return render_template('restaurant_home.html',restaurant=restaurant)
+    
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            restaurant.image_url = picture_file
+        restaurant.name = form.name.data
+        restaurant.description = form.description.data
+        db.session.commit()
+        flash("your account has been updated!", "success")
+        return redirect(url_for("restaurant_home", restaurant_id=restaurant.id))
+    elif  request.method == 'GET':
+        form.name.data = restaurant.name
+        #form.description.data = restaurant.description
+    
+    image_file = url_for("static", filename="img/" + restaurant.image_url)
+    return render_template('restaurant_home.html', form=form, restaurant=restaurant, image_file=image_file)
 
 
 @app.route('/restaurants', methods=["GET"])

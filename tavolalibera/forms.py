@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField,PasswordField, SubmitField, BooleanField, IntegerField, SelectField
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, Length, InputRequired, EqualTo, ValidationError, Regexp
@@ -113,6 +114,19 @@ class CreateRestaurantForm(FlaskForm):
         "Aforo Máximo"
     )
     submit = SubmitField("Completar")
+
+class UpdateRestaurantForm(FlaskForm):
+    name = StringField(
+        "Nombre del Restaurante", validators=[DataRequired(), Length(min=2, max=64), Regexp(r'^\w+$')]
+    )
+    description = StringField(
+         "Descripción del Restaurante", validators=[DataRequired(), Length(min=2, max=512), Regexp(r'^\w+$')]
+    )
+    picture = FileField(
+        "Actualizar imagen", validators=[FileAllowed(["jpg", "png"])]
+    )
+    submit = SubmitField("Actualizar")
+
 
 class CreateDishForm(FlaskForm):
     name = StringField(
