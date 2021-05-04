@@ -65,7 +65,7 @@ def reservation(restaurant_id):
     if request.method == 'GET':
         return render_template('reservation.html', form=form)
     
-    if form.validate_on_submit() and current_user.is_authenticated:
+    if form.validate_on_submit():
         reservation = Reservation(
         user_id = current_user.id,
         day=form.date.data,
@@ -76,9 +76,10 @@ def reservation(restaurant_id):
         )
         db.session.add(reservation)
         db.session.commit()
-        flash("Your reservation has been created successfully!")
-        return redirect(url_for("reservation"))
+        flash("Your reservation has been created successfully!", "info")
+        return redirect(url_for("reservation", restaurant_id=restaurant_id))
     else:
+        flash(f"{form.errors}")
         flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
         return render_template('reservation.html', form=form)
 

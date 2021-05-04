@@ -41,9 +41,6 @@ class ReservationForm(FlaskForm):
     start_time = TimeField("Hora comienzo", validators=[DataRequired()],format='%H:%M', render_kw={"placeholder":'12:00'})
     end_time = TimeField("Hora finalización", validators=[DataRequired()],format='%H:%M',render_kw={"placeholder":'00:00'})
     num_people = IntegerField("Cantidad de personas", validators=[DataRequired()])
-    lista_platos = SelectField(
-        "Agregar platos", validators=[DataRequired()], choices=[(1, 'Plato 1'), (2, 'Plato 2'), (3, 'Plato 3')]
-    )
     submit = SubmitField("Book")
 
 
