@@ -20,6 +20,7 @@
 
                 <form method="POST" action="{{ url_for('dishes_update', restaurant_id = restaurant_id, dish_id = formUpdate[loop.index - 1].dish_id)  }}">
                     {{ formUpdate[loop.index - 1].hidden_tag() }}
+                    <p style="display: none;"> {{formUpdate[loop.index - 1].dish_id}}</p>
                     <hr>
                     <div class="formCreate-group row my-4 admin_mode">
                         <div id="btn_turn_agregar_plato" class="col-10 mx-auto">
