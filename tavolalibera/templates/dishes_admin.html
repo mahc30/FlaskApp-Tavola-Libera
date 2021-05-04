@@ -10,27 +10,51 @@
                 <p class="px-2 my-auto">
                     {{dish.description}}
                 </p>
+
+                <form method="POST" action="{{ url_for('dishes_update', restaurant_id = restaurant_id, dish_id = formUpdate[loop.index - 1].dish_id)  }}">
+                    {{ formUpdate[loop.index - 1].hidden_tag() }}
+                    <div class="container border-top pt-3 ocultar">
+                        <div class="row my-4 mx-auto w-75">
+                            {{ formUpdate[loop.index - 1].name.label(class="formUpdate[loop.index - 1]-control-label") }} {% if formUpdate[loop.index - 1].name.errors %} {{formUpdate[loop.index - 1].name(class="formUpdate[loop.index - 1]-control formUpdate[loop.index - 1]-control-lg
+                            is-invalid")}}
+                            <div class="invalid-feedback">
+                                {% for error in formCreate.name.errors %}
+                                <span>{{ error }}</span> {% endfor %}
+                            </div>
+                            {% else %} {{ formUpdate[loop.index - 1].name(class="formUpdate[loop.index - 1]-control formUpdate[loop.index - 1]-control-lg") }} {% endif %}
+                        </div>
+
+                        <div class="row my-4 mx-auto w-75">
+                            {{ formUpdate[loop.index - 1].description.label(class="formUpdate[loop.index - 1]-control-label") }} {% if formUpdate[loop.index - 1].description.errors %} {{formUpdate[loop.index - 1].description(class="formUpdate[loop.index - 1]-control formUpdate[loop.index-
+                            1]-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in formCreate.description.errors %}
+                                <span>{{ error }}</span> {% endfor %}
+                            </div>
+                            {% else %} {{ formUpdate[loop.index - 1].description(class="formUpdate[loop.index - 1]-control formUpdate[loop.index - 1]-control-lg") }} {% endif %}
+                        </div>
+                        {{ formUpdate[loop.index - 1].submitUpdate(class="btn btn-outline-dark my-2") }}
+
+                    </div>
+                </form>
             </div>
-            <div class="col">
-                <p>
-                    <a id="btn_restaurante" href="javascript:void(0);">
+            <a id="btn_restaurante" href="javascript:void(0);">
+                <div class="col">
+                    <p>
                         {%if dish.image_url %}
-                        <img src={{dish.image_url}} class="rounded mx-auto d-block" alt="">
-                        {% else %}
-                        <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" 
-                        class="rounded mx-auto d-block" alt="">
-                        {% endif %}
-                    </a>
-                </p>
-            </div>
+                        <img src={{dish.image_url}} class="rounded mx-auto d-block" alt=""> {% else %}
+                        <img src="https://images.unsplash.com/photo-1502301103665-0b95cc738daf?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" class="rounded mx-auto d-block" alt=""> {% endif %}
+                    </p>
+                </div>
+            </a>
         </div>
     </div>
     {% endfor %}
 
     <form method="POST" action="">
-        {{ form.hidden_tag() }}
+        {{ formCreate.hidden_tag() }}
 
-        <div class="form-group row my-4 admin_mode">
+        <div class="formCreate-group row my-4 admin_mode">
             <div id="btn_turn_agregar_plato" class="col-10 mx-auto">
                 <a href=" javascript:void(0);" class="btn btn-default w-100">Agregar Plato</a>
             </div>
@@ -38,23 +62,23 @@
 
         <div id="agregar_plato_container" class="container border-top pt-3 ocultar">
             <div class="row my-4 mx-auto w-75">
-                {{ form.name.label(class="form-control-label") }} {% if form.name.errors %} {{form.name(class="form-control form-control-lg is-invalid") }}
+                {{ formCreate.name.label(class="formCreate-control-label") }} {% if formCreate.name.errors %} {{formCreate.name(class="formCreate-control formCreate-control-lg is-invalid") }}
                 <div class="invalid-feedback">
-                    {% for error in form.name.errors %}
+                    {% for error in formCreate.name.errors %}
                     <span>{{ error }}</span> {% endfor %}
                 </div>
-                {% else %} {{ form.name(class="form-control form-control-lg") }} {% endif %}
+                {% else %} {{ formCreate.name(class="formCreate-control formCreate-control-lg") }} {% endif %}
             </div>
 
             <div class="row my-4 mx-auto w-75">
-                {{ form.description.label(class="form-control-label") }} {% if form.description.errors %} {{form.description(class="form-control form-control-lg is-invalid") }}
+                {{ formCreate.description.label(class="formCreate-control-label") }} {% if formCreate.description.errors %} {{formCreate.description(class="formCreate-control formCreate-control-lg is-invalid") }}
                 <div class="invalid-feedback">
-                    {% for error in form.description.errors %}
+                    {% for error in formCreate.description.errors %}
                     <span>{{ error }}</span> {% endfor %}
                 </div>
-                {% else %} {{ form.description(class="form-control form-control-lg") }} {% endif %}
+                {% else %} {{ formCreate.description(class="formCreate-control formCreate-control-lg") }} {% endif %}
             </div>
-            {{ form.submit(class="btn btn-outline-dark my-2") }}
+            {{ formCreate.submitCreate(class="btn btn-outline-dark my-2") }}
 
         </div>
     </form>

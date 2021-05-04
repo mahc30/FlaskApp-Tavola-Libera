@@ -72,7 +72,7 @@ class ResetPasswordForm(FlaskForm):
 
 class CreateRestaurantForm(FlaskForm):
     name = StringField(
-        "Nombre del Restaurante", validators=[DataRequired(), Length(min=2, max=64), Regexp(r'^\w+$')]
+        "Nombre del Restaurante", validators=[DataRequired(), Length(min=2, max=64)]
     )
     address = StringField(
         "Dirección", validators=[DataRequired(), Length(min=2, max=64)]
@@ -117,10 +117,10 @@ class CreateRestaurantForm(FlaskForm):
 
 class UpdateRestaurantForm(FlaskForm):
     name = StringField(
-        "Nombre del Restaurante", validators=[DataRequired(), Length(min=2, max=64), Regexp(r'^\w+$')]
+        "Nombre del Restaurante", validators=[DataRequired(), Length(min=2, max=64)]
     )
     description = StringField(
-         "Descripción del Restaurante", validators=[DataRequired(), Length(min=2, max=512), Regexp(r'^\w+$')]
+         "Descripción del Restaurante", validators=[DataRequired(), Length(min=2, max=512)]
     )
     picture = FileField(
         "Actualizar imagen", validators=[FileAllowed(["jpg", "png"])]
@@ -130,16 +130,16 @@ class UpdateRestaurantForm(FlaskForm):
 
 class CreateDishForm(FlaskForm):
     name = StringField(
-        "Nombre del Plato", validators=[DataRequired(), Length(min=1, max=64), Regexp(r'^\w+$')]
+        "Nombre del Plato", validators=[DataRequired(), Length(min=1, max=64)]
     )
     description = StringField(
-        "Descripción del Plato", validators=[DataRequired(), Length(min=1, max=64), Regexp(r'^\w+$')]
+        "Descripción del Plato", validators=[DataRequired(), Length(min=1, max=64)]
     )
-    submit = SubmitField("Confirmar")
+    submitCreate = SubmitField("Confirmar")
 
 class UpdateDishForm(FlaskForm):
     name = StringField(
-        "Nombre del Plato", validators=[DataRequired(), Length(min=1, max=64), Regexp(r'^\w+$')]
+        "Nombre del Plato", validators=[DataRequired(), Length(min=1, max=64)]
     )
     description = StringField(
         "Descripción del Plato", validators=[DataRequired(), Length(min=1, max=64)]
@@ -147,4 +147,6 @@ class UpdateDishForm(FlaskForm):
     picture = FileField(
         "Actualizar imagen", validators=[FileAllowed(["jpg", "png"])]
     )
-    submit = SubmitField("Confirmar")
+    dish_id = IntegerField("dish_id", validators=[DataRequired()])
+    submitUpdate = SubmitField("Confirmar")
+
