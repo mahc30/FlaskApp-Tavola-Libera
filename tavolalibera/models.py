@@ -108,7 +108,7 @@ class Dish(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(124), nullable=False)
     description = db.Column(db.String(1024), nullable=True)
-    image_url = db.Column(db.String(1024), nullable=True, default="https://via.placeholder.com/300")
+    image_url = db.Column(db.String(1024), nullable=True, default="dish_default_logo.png")
     restaurant_id = db.Column(db.Integer, db.ForeignKey('restaurants.id'), nullable=False)
     restaurant = db.relationship("Restaurant", backref=db.backref("dish", uselist=False))
     

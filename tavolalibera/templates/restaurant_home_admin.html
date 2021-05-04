@@ -4,7 +4,7 @@
 <section>
     <h2 class="px-4 my-4">{{ restaurant.name}}</h2>
     <img src="{{ image_file }}" class="account-image  mx-auto">
-    <p class="px-2">{{restaurant.description}}</p>
+    <p class="px-2 py-2">{{restaurant.description}}</p>
     <div class="border-top pt-3">
         <a href="{{url_for('redirect_dishes',restaurant_id = restaurant.id)}}" id="btn_menu" class="px-2 text-dark">
             <h4><strong>Ver Menú</strong></h4>
@@ -16,7 +16,7 @@
         </a>
     </div>
     <div class="content-section">
-        <form method="POST" action="/" enctype="multipart/form-data">
+        <form method="POST" action="" enctype="multipart/form-data">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
                 <legend class="border-bottom mb-4">Actualizar</legend>

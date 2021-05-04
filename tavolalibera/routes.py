@@ -24,56 +24,56 @@ def home():
 @app.route("/", methods=["GET", "POST"])
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    form_create = LoginForm()
+    form = LoginForm()
 
     if request.method == 'GET':
-        return render_template("login.html", form_create=form_create)
+        return render_template("login.html", form=form)
     
-    if form_create.validate_on_submit():
-        user = User.query.filter_by(username=form_create.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form_create.password.data):
-            login_user(user, remember=form_create.remember.data)
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
             return redirect(url_for("restaurants"))
         else:
             flash("Usuario o Contraseña Incorrectos", "danger")
-            return render_template("login.html", form_create=form_create)
+            return render_template("login.html", form=form)
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
-    form_create = RegisterForm()
+    form = RegisterForm()
     if request.method == 'GET':
-        return render_template('register.html', form_create=form_create)
+        return render_template('register.html', form=form)
 
-    if form_create.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form_create.password.data).decode('utf-8')
-        user = User(username=form_create.username.data, password=hashed_password,security_question=form_create.security_question.data, security_answer=form_create.security_answer.data)
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, password=hashed_password,security_question=form.security_question.data, security_answer=form.security_answer.data)
         db.session.add(user)
         db.session.commit()
         flash("Your account has been created successfully ! You are now able to login", "info")
         return redirect(url_for("login"))
     else:
         flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
-        return render_template('register.html', form_create=form_create)
+        return render_template('register.html', form=form)
 
 
        
 @app.route('/reservation/<restaurant_id>', methods=["GET", "POST"])
 @login_required
 def reservation(restaurant_id):
-    form_create = ReservationForm()
+    form = ReservationForm()
     restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
     if request.method == 'GET':
-        return render_template('reservation.html', form_create=form_create)
+        return render_template('reservation.html', form=form)
     
-    if form_create.validate_on_submit():
+    if form.validate_on_submit():
         if current_user.is_authenticated:
             reservation = Reservation(
             user_id = current_user.id,
-            day=form_create.date.data,
+            day=form.date.data,
             restaurant_id = restaurant.id,
-            start_hour=form_create.start_time.data,
-            finish_hour=form_create.end_time.data,
-            num_people = form_create.num_people.data,
+            start_hour=form.start_time.data,
+            finish_hour=form.end_time.data,
+            num_people = form.num_people.data,
             )
         else:
             flask("No user login")
@@ -83,7 +83,7 @@ def reservation(restaurant_id):
         return redirect(url_for("reservation"))
     else:
         flash("Ocurrió un error. Por favor verifique los datos ingresados", "danger")
-        return render_template('reservation.html', form_create=form_create)
+        return render_template('reservation.html', form=form)
 
 @app.route('/redirect/dishes/<restaurant_id>', methods=['GET'])
 @login_required
@@ -132,22 +132,22 @@ def reservation_admin(restaurant_id):
 @app.route('/register/restaurant', methods=['GET', 'POST'])
 @login_required
 def register_restaurant():
-    form_create = CreateRestaurantForm()
+    form = CreateRestaurantForm()
     
     if request.method == 'GET':
-        return render_template('register_restaurant.html', form_create = form_create)
+        return render_template('register_restaurant.html', form = form)
     
-    if form_create.validate_on_submit():
+    if form.validate_on_submit():
         restaurant = Restaurant(
-            name = form_create.name.data,
-            address = form_create.address.data,
-            phone_number = form_create.phone_number.data,
-            city_id = form_create.city.data,
-            opening_hour = form_create.opening_hour.data,
-            closing_hour = form_create.closing_hour.data,
+            name = form.name.data,
+            address = form.address.data,
+            phone_number = form.phone_number.data,
+            city_id = form.city.data,
+            opening_hour = form.opening_hour.data,
+            closing_hour = form.closing_hour.data,
             work_days = 'DLMMJVS', #TODO temporal fix, ¿Cómo vamos a guardar los días en que el restaurante está abierto?
             owner_id = current_user.id,
-            max_seats = form_create.max_seats.data
+            max_seats = form.max_seats.data
         )
             
         db.session.add(restaurant)
@@ -155,8 +155,8 @@ def register_restaurant():
         flash("¡El Restaurante se ha creado correctamente!", "info" )
         return redirect(url_for("restaurants"))
     else:
-        flash(form_create.errors, "danger")
-        return render_template('register_restaurant.html', form_create = form_create)
+        flash(form.errors, "danger")
+        return render_template('register_restaurant.html', form = form)
         
 @app.route("/logout")
 def logout():
@@ -178,24 +178,25 @@ def save_picture(form_picture):
 @app.route('/restaurant_home_admin/<restaurant_id>', methods=["GET", "POST"])
 @login_required
 def restaurant_home_admin(restaurant_id):
-    form_create = UpdateRestaurantForm()
+    form = UpdateRestaurantForm()
     restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
-    
-    if form_create.validate_on_submit():
-        if form_create.picture.data:
-            picture_file = save_picture(form_create.picture.data)
+
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
             restaurant.image_url = picture_file
-        restaurant.name = form_create.name.data
-        restaurant.description = form_create.description.data
+        restaurant.name = form.name.data
+        restaurant.description = form.description.data
         db.session.commit()
         flash("your account has been updated!", "success")
-        return redirect(url_for("restaurant_home", restaurant_id=restaurant.id))
+        return redirect(url_for("restaurant_home_admin", restaurant_id=restaurant.id))
     elif  request.method == 'GET':
-        form_create.name.data = restaurant.name
-        form_create.description.data = restaurant.description
-    
+        form.name.data = restaurant.name
+        form.description.data = restaurant.description
+        
     image_file = url_for("static", filename="img/" + restaurant.image_url)
-    return render_template('restaurant_home_admin.html', form_create=form_create, restaurant=restaurant, image_file=image_file)
+    return render_template('restaurant_home_admin.html', form=form, restaurant=restaurant, image_file=image_file)
+
 
 @app.route('/restaurant_home/<restaurant_id>', methods=["GET", "POST"])
 @login_required
@@ -274,16 +275,16 @@ def dishes_update(restaurant_id, dish_id):
 
 @app.route("/reset_password", methods=['GET', 'POST'])
 def reset_request():
-    form_create = RequestResetForm()
+    form = RequestResetForm()
 
-    if form_create.validate_on_submit():
-        user = User.query.filter_by(username=form_create.username.data).first()
-        if user.security_answer == form_create.security_answer.data:
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user.security_answer == form.security_answer.data:
             token = user.get_reset_token()
             return redirect(url_for("reset_token",token=token))
         else:
             flash("La respuesta de seguridad no coincide", "danger")
-    return render_template("reset_request.html", form_create=form_create)
+    return render_template("reset_request.html", form=form)
 
 @app.route("/reset_password/<token>", methods=['GET', 'POST'])
 def reset_token(token):
@@ -292,11 +293,11 @@ def reset_token(token):
         flash("Ese es un token expirado o invalido", "warning")
         return redirect(url_for("reset_request"))
     
-    form_create = ResetPasswordForm()
-    if form_create.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form_create.password.data).decode('utf-8')
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user.password = hashed_password
         db.session.commit()
         flash("Su contraseña ha sido actualizada correctamente", "info")
         return redirect(url_for("login"))
-    return render_template("reset_token.html", form_create=form_create)
+    return render_template("reset_token.html", form=form)
