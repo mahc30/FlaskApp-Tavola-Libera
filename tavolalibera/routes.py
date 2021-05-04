@@ -99,7 +99,7 @@ def redirect_dishes(restaurant_id):
 def redirect_restaurant():
     restaurant = Restaurant.query.filter_by(owner_id=current_user.id).first()
     if restaurant:
-        return redirect(url_for("restaurant_home", restaurant_id=restaurant.id))
+        return redirect(url_for("redirect_restaurant_home", restaurant_id=restaurant.id))
     else:
         return redirect(url_for("register_restaurant"))
 
