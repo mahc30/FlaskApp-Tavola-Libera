@@ -136,3 +136,15 @@ class CreateDishForm(FlaskForm):
         "Descripción del Plato", validators=[DataRequired(), Length(min=1, max=64), Regexp(r'^\w+$')]
     )
     submit = SubmitField("Confirmar")
+
+class UpdateDishForm(FlaskForm):
+    name = StringField(
+        "Nombre del Plato", validators=[DataRequired(), Length(min=1, max=64), Regexp(r'^\w+$')]
+    )
+    description = StringField(
+        "Descripción del Plato", validators=[DataRequired(), Length(min=1, max=64)]
+    )
+    picture = FileField(
+        "Actualizar imagen", validators=[FileAllowed(["jpg", "png"])]
+    )
+    submit = SubmitField("Confirmar")

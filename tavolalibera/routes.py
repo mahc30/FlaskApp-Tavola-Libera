@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template, url_for, redirect, flash, request, abort
 from flask_login import login_user, current_user, logout_user, login_required
 from tavolalibera.models import Restaurant,Reservation,Security_Question,User, Dish
-from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, UpdateRestaurantForm, RequestResetForm, ResetPasswordForm, CreateDishForm
+from tavolalibera.forms import RegisterForm,ReservationForm,LoginForm, CreateRestaurantForm, UpdateRestaurantForm, RequestResetForm, ResetPasswordForm, CreateDishForm, UpdateDishForm
 from tavolalibera import app, db, bcrypt
 from datetime import datetime
 
@@ -112,6 +112,16 @@ def redirect_reservation(restaurant_id):
     else:
         return redirect(url_for("reservation", restaurant_id=restaurant.id))
 
+@app.route('/redirect/restaurant_home/<restaurant_id>', methods=['GET'])
+@login_required
+def redirect_restaurant_home(restaurant_id):
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
+    if restaurant and restaurant.owner_id == current_user.id:
+        return redirect(url_for("restaurant_home_admin",restaurant_id=restaurant.id))
+    else:
+        return redirect(url_for("restaurant_home", restaurant_id=restaurant.id))
+
+
 @app.route('/reservation_admin/<restaurant_id>', methods=['GET'])
 @login_required
 def reservation_admin(restaurant_id):
@@ -165,9 +175,9 @@ def save_picture(form_picture):
     
     return picture_fn
 
-@app.route('/restaurant_home/<restaurant_id>', methods=["GET", "POST"])
+@app.route('/restaurant_home_admin/<restaurant_id>', methods=["GET", "POST"])
 @login_required
-def restaurant_home(restaurant_id):
+def restaurant_home_admin(restaurant_id):
     form = UpdateRestaurantForm()
     restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
     
@@ -182,11 +192,20 @@ def restaurant_home(restaurant_id):
         return redirect(url_for("restaurant_home", restaurant_id=restaurant.id))
     elif  request.method == 'GET':
         form.name.data = restaurant.name
-        #form.description.data = restaurant.description
+        form.description.data = restaurant.description
     
     image_file = url_for("static", filename="img/" + restaurant.image_url)
-    return render_template('restaurant_home.html', form=form, restaurant=restaurant, image_file=image_file)
+    return render_template('restaurant_home_admin.html', form=form, restaurant=restaurant, image_file=image_file)
 
+@app.route('/restaurant_home/<restaurant_id>', methods=["GET", "POST"])
+@login_required
+def restaurant_home(restaurant_id):
+    restaurant = Restaurant.query.filter_by(id=restaurant_id).first()
+    image_file = url_for("static", filename="img/" + restaurant.image_url)
+    return render_template('restaurant_home.html', restaurant=restaurant, image_file=image_file)
+    
+    
+    
 
 @app.route('/restaurants', methods=["GET"])
 @login_required
@@ -204,10 +223,15 @@ def dishes(restaurant_id):
 @login_required
 def dishes_admin(restaurant_id):
     form = CreateDishForm()
+    # form_update = []
     dishes = Dish.query.filter_by(restaurant_id = restaurant_id)
 
+    # for i in range(len(dishes)):
+    #     form_update.push(UpdateDishForm())
+    #     form_update[i].dish_id.data = dishes[i].id
+
     if request.method == 'GET':
-        return render_template('dishes_admin.html', form=form,dishes = dishes)
+        return render_template('dishes_admin.html',form=form,dishes=dishes, restaurant_id=restaurant_id)
 
     
     if form.validate_on_submit():
@@ -223,8 +247,11 @@ def dishes_admin(restaurant_id):
         return redirect(url_for("dishes_admin", restaurant_id=restaurant_id))
     else:
         flash(form.errors, "danger")
-        return render_template('dishes_admin.html', form=form,dishes = dishes)
+        return render_template('dishes_admin.html', form=form,dishes=dishes)
 
+# @app.route('/dishes_admin/<restaurant_id>/<dish_id>', methods=["POST"])
+# @login_required
+# def dish_admin_post(restaurant_id, dish_id)
 
 
 @app.route("/reset_password", methods=['GET', 'POST'])
