@@ -65,18 +65,15 @@ def reservation(restaurant_id):
     if request.method == 'GET':
         return render_template('reservation.html', form=form)
     
-    if form.validate_on_submit():
-        if current_user.is_authenticated:
-            reservation = Reservation(
-            user_id = current_user.id,
-            day=form.date.data,
-            restaurant_id = restaurant.id,
-            start_hour=form.start_time.data,
-            finish_hour=form.end_time.data,
-            num_people = form.num_people.data,
-            )
-        else:
-            flask("No user login")
+    if form.validate_on_submit() and current_user.is_authenticated:
+        reservation = Reservation(
+        user_id = current_user.id,
+        day=form.date.data,
+        restaurant_id = restaurant.id,
+        start_hour=form.start_time.data,
+        finish_hour=form.end_time.data,
+        num_people = form.num_people.data,
+        )
         db.session.add(reservation)
         db.session.commit()
         flash("Your reservation has been created successfully!")
