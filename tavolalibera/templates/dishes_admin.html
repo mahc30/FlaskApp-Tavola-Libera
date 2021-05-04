@@ -1,13 +1,11 @@
 {% extends "layout.html" %} {% block title %} Platos {% endblock %} {% block content %}
 <section id="lista_restaurantes" class="overflow-auto ocultar">
     <h2 class="px-4 my-4">Lista Platos</h2>
-
-    {% for dish in dishes %}
-    <hr>
+    <hr> {% for dish in dishes %}
 
     <div class="container">
         <div class="row">
-            <div class="col border-top pt-3">
+            <div class="col border-bottom pt-3">
                 <h4 class="px-2">{{dish.name}}</h4>
                 <p class="px-2 my-auto">
                     {{dish.description}}
@@ -22,6 +20,7 @@
 
                 <form method="POST" action="{{ url_for('dishes_update', restaurant_id = restaurant_id, dish_id = formUpdate[loop.index - 1].dish_id)  }}">
                     {{ formUpdate[loop.index - 1].hidden_tag() }}
+                    <hr>
                     <div class="formCreate-group row my-4 admin_mode">
                         <div id="btn_turn_agregar_plato" class="col-10 mx-auto">
                             <p href=" javascript:void(0);" class="btn btn-default w-100">Editar Plato <strong>{{ dish.name }}</strong></p>
