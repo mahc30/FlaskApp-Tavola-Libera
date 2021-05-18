@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField,PasswordField, SubmitField, BooleanField, IntegerField, SelectField
 from wtforms.fields.html5 import DateField, TimeField
 from wtforms.validators import DataRequired, Length, InputRequired, EqualTo, ValidationError, Regexp
@@ -35,16 +36,11 @@ class RegisterForm(FlaskForm):
         if user:
             raise ValidationError("Este usuario ya existe, por favor elija otro")
 
-
-
 class ReservationForm(FlaskForm):
     date = DateField('Fecha',format='%Y-%m-%d',  validators=[DataRequired()],render_kw = {"placeholder":'2021-01-01'})
     start_time = TimeField("Hora comienzo", validators=[DataRequired()],format='%H:%M', render_kw={"placeholder":'12:00'})
     end_time = TimeField("Hora finalización", validators=[DataRequired()],format='%H:%M',render_kw={"placeholder":'00:00'})
     num_people = IntegerField("Cantidad de personas", validators=[DataRequired()])
-    lista_platos = SelectField(
-        "Agregar platos", validators=[DataRequired()], choices=[(1, 'Plato 1'), (2, 'Plato 2'), (3, 'Plato 3')]
-    )
     submit = SubmitField("Book")
 
 
@@ -73,7 +69,7 @@ class ResetPasswordForm(FlaskForm):
 
 class CreateRestaurantForm(FlaskForm):
     name = StringField(
-        "Nombre del Restaurante", validators=[DataRequired(), Length(min=2, max=64), Regexp(r'^\w+$')]
+        "Nombre del Restaurante", validators=[DataRequired(), Length(min=2, max=64)]
     )
     address = StringField(
         "Dirección", validators=[DataRequired(), Length(min=2, max=64)]
@@ -115,4 +111,39 @@ class CreateRestaurantForm(FlaskForm):
         "Aforo Máximo"
     )
     submit = SubmitField("Completar")
+
+class UpdateRestaurantForm(FlaskForm):
+    name = StringField(
+        "Nombre del Restaurante", validators=[DataRequired(), Length(min=2, max=64)]
+    )
+    description = StringField(
+         "Descripción del Restaurante", validators=[DataRequired(), Length(min=2, max=512)]
+    )
+    picture = FileField(
+        "Actualizar imagen", validators=[FileAllowed(["jpg", "png"])]
+    )
+    submit = SubmitField("Actualizar")
+
+
+class CreateDishForm(FlaskForm):
+    name = StringField(
+        "Nombre del Plato", validators=[DataRequired(), Length(min=1, max=64)]
+    )
+    description = StringField(
+        "Descripción del Plato", validators=[DataRequired(), Length(min=1, max=64)]
+    )
+    submitCreate = SubmitField("Confirmar")
+
+class UpdateDishForm(FlaskForm):
+    name = StringField(
+        "Nombre del Plato", validators=[DataRequired(), Length(min=1, max=64)]
+    )
+    description = StringField(
+        "Descripción del Plato", validators=[DataRequired(), Length(min=1, max=64)]
+    )
+    picture = FileField(
+        "Actualizar imagen", validators=[FileAllowed(["jpg", "png"])]
+    )
+    dish_id = IntegerField("dish_id", validators=[DataRequired()])
+    submitUpdate = SubmitField("Confirmar")
 
